@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  
+	  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0">
+		
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Monitoring App</title>
+	  
+
+    <!-- Bootstrap -->
+<!--    <link href="css/bootstrap.min.css" rel="stylesheet">-->
+	<link href="less/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	  
+	  
+	  
+	  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	  
+	  <script type="text/javascript">
+		  $( document ).ready(function() {
+			  console.log( "ready!" );
+
+			$("#button1").click(function(){
+				console.log("test");
+				$(".zoom-container").toggleClass("zoom");
+			});
+			$("#button2").click(function(){
+				console.log("test");
+				$(".zoom-container").toggleClass("zoom2");
+			});
+			// Kein Kommentar Nummer 1
+		});
+	  </script>
+	  <!-- HTML Kommentar -->
+  </head>
+  <body>
+	  <div class="content-container">
+    <div class="row header">
+		<div class="col-xs-3">
+			<img src="img/coperion.jpg" class="logo" />
+		</div>
+		<div class="col-xs-6 text-center top-buffer">
+			<h4><b>Monitoring</b></h4>
+		</div>
+		<div class="col-xs-3  top-buffer text-right">
+			<h4 class="highlighted date right-buffer">Do. 25.07.2015</h4>
+		</div>
+		</div>
+		<div class="row">
+			<div class="anlagen-container">
+				<img src="img/anlage2.png" class="zoom-container zoom" >
+			</div>
+		</div>
+		<div class="row">
+			<div class="button-bar noselect">
+				<div class="button-bar-inner">
+					<div class="status-button" id="button1">
+						<h6>mm/s</h6>
+						<h3 class="highlighted date top-buffer">1.1</h3>
+					</div>
+					<div class="status-button" id="button2">
+						<h6>mm/s</h6>
+						<h3 class="highlighted date top-buffer">2.1</h3>
+					</div>
+					<div class="status-button" id="button3">
+						<h6>Hertz</h6>
+						<h3 class="highlighted date top-buffer">440</h3>
+					</div>
+					<div class="status-button" id="button4">
+						<h6>mm/s</h6>
+						<h3 class="highlighted date top-buffer">Sensor1</h3>
+					</div>
+					<div class="status-button" id="button5">
+						<h6>mm/s</h6>
+						<h3 class="highlighted date top-buffer">1.1</h3>
+					</div>
+					<div class="status-button" id="button6">
+						<h6>mm/s</h6>
+						<h3 class="highlighted date top-buffer">1.1</h3>
+					</div>
+					<div class="status-button" id="button6">
+						<h6>mm/s</h6>
+						<h3 class="highlighted date top-buffer">1.1</h3>
+					</div>
+					<div class="status-button" id="button7">
+						<h6>mm/s</h6>
+						<h3 class="highlighted date top-buffer">3.1</h3>
+					</div>
+				</div>
+			</div>
+	 </div>
+
+    
+  </body>
+</html>
