@@ -297,8 +297,8 @@ dot{
 #btns3, #btns4{
 	position: absolute;
 	bottom: 27px;
-	left: 30px;
-	width: 590px;
+	right: 30px;
+	width: 200px;
     white-space: nowrap;
     font-size: 10pt;
 }
@@ -557,10 +557,60 @@ dot{
 	position: absolute;
 }
 
-#graphImg{
+.graphImg{
 	position: absolute;
-	bottom: 0px;
-	left: 60px;
+	bottom: 63px;
+	left: 46px;
+}
+
+#graphBtns{
+	--width: 1000px;
+	white-space: nowrap;
+	position: fixed;
+	left: 73px;
+	bottom: 2px;
+}
+#graphBtns p{
+	display: inline-block;
+	padding: 5px 10px;
+	margin-right: 10px;
+	font-size: 10pt;
+}
+.lineR.active{
+	color: white;
+	background-color: #ff4a00;
+}
+.lineG.active{
+	color: white;
+	background-color: #6eb300;
+}
+.lineB.active{
+	color: white;
+	background-color: #3782e5;
+}
+.lineY.active{
+	color: white;
+	background-color: #ffbe00;
+}
+.lineR{
+	color: black;
+	background-color: rgba(0,0,0,0);
+	border: 1px solid #ff4a00;
+}
+.lineG{
+	color: black;
+	background-color: rgba(0,0,0,0);
+	border: 1px solid #6eb300;
+}
+.lineB{
+	color: black;
+	background-color: rgba(0,0,0,0);
+	border: 1px solid #3782e5;
+}
+.lineY{
+	color: black;
+	background-color: rgba(0,0,0,0);
+	border: 1px solid #ffbe00;
 }
 
 
