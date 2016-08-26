@@ -8,30 +8,52 @@ $(document).ready(function(){
 
 	jQuery.easing.def = "easeInOutQuad";
 
-	console.log($(window).height())
-
-	var mapMarginDefault = 70
+	var mapMarginDefault = 55
 	//var leftFlagWidth = $("#mapDiv .leftFlag").width()-30
 	var leftFlagWidth = 130
 
 	var durchsatzBsp = "2.500 kg/h"
 	var produktionsmengeBsp = "40 t"
 	var produktuntergruppeBsp = "PA 1234"
-	var heute = new Date()
+	//var heute = new Date()
+	var didShowWarning = false
+	var showingTable = false
+	var dayView = false
+	var graphView = false
+	var isAtPage = 0
+	var infoNumber = 0
+	var todayTabNumber = 0
+	var onInfoPage = 0
 
-	var tage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
-	var monate = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
-	var materialListe = ["Stickstoff", "Kindertränen", "Diamant", "Knete", "Milka", "Müllermilch", "Atommüll", "Sternenstaub", "Rinderfilet", "Argon", "Süßstoff"]
+	var newsListe = ["Alter Falter, geile Anlage <b>@coperion</b>",
+		"hdf <b>#coperion</b> euer stand ist so awesome",
+		"<b>#coperion</b> ich werde meine drei Erstgeborenen nach euch benennen.",
+		"Doperion <b>@coperion</b>",
+		"I can’t <b>#coperion</b> with dat awesumness",
+		"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>"
+	]
 
-	$("#header h2").html(tage[heute.getDay()] + ", " + heute.getDate() + ". " + monate[heute.getMonth()])
+	var tage = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+	var monate = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+	//var materialListe = ["Stickstoff", "Kindertränen", "Diamant", "Knete", "Milka", "Müllermilch", "Atommüll", "Sternenstaub", "Rinderfilet", "Argon", "Süßstoff"]
+	var thstndrd = "th"
+	if (heute.getDate() == 1 || heute.getDate() == 11 || heute.getDate() == 21 || heute.getDate() == 31) {
+		thstndrd = "st"
+	} else if (heute.getDate() == 2 || heute.getDate() == 12 || heute.getDate() == 22) {
+		thstndrd = "nd"
+	} else if (heute.getDate() == 3 || heute.getDate() == 13 || heute.getDate() == 23) {
+		thstndrd = "rd"
+	} 
+	$("#header h2").html(tage[heute.getDay()] + ", " + monate[heute.getMonth()] + " " + heute.getDate() + thstndrd)
 
 	function loadHome(){
 
 		console.log("go home");
+		onInfoPage = 0
 
 		$("#mapDiv .mapInfo").each(function(index, value) {
 			var soManyEntries = parseInt($(this).children("ul").children("li").length)
-			$(this).children(".line").css({"height": soManyEntries*15+33+"px"})
+			$(this).children(".line").css({"height": soManyEntries*15+34+"px"})
 			if ($(this).css("opacity") < 0.1 ){
 				$(this).stop(true).css({"opacity": "0"})
 				// place information
@@ -52,11 +74,14 @@ $(document).ready(function(){
 
 				// start animate information
 				$(this).stop(true).delay(300+index*100).animate({"opacity": 1, "margin-top": $(this).attr("data-y")+"px", "height": parseInt($(this).height())+10+ "px"}, 600, "easeInOutBack");
+
+				$(".attentionIcnContainer").remove()
+				didShowWarning = false
 			}
 		});
 
 		// start animate map
-		$("#mapDiv #map").stop(true).animate({"width": "100%", "margin-left": "0%", "margin-top": mapMarginDefault+"px", "opacity": 1}, duration = 900, "easeInOutQuart")
+		$("#mapDiv #map").stop(true).delay(50).animate({"width": "100%", "margin-left": "0%", "margin-top": mapMarginDefault+"px", "opacity": 1}, duration = 900, "easeInOutQuart")
 
 		// disable popup
 		$("#popup").stop(true).animate({"opacity": 0}, duration = 500)
@@ -67,23 +92,158 @@ $(document).ready(function(){
 		$("#toggle").css({"pointer-events": "auto"}).animate({"opacity": 1})
 		$("#toggleText").animate({"opacity": 1})
 		$("#btns").css({"pointer-events": "auto"}).animate({"opacity": 1})
+		$(".night").delay(300).animate({"opacity": 0.25})			
 	}
 
 	loadHome()
 
+	// tag / woche umschalten
+	function switchDayWeek(){
+		var noneListPopup = 0
+		if (showingTable == true && isAtPage == 0){
+			noneListPopup = 1
+		} else if ($("#popup").css("opacity") > 0.5){
+			noneListPopup = 2
+		}
+
+		console.log(noneListPopup)
+
+		if (noneListPopup != 0){
+			if (dayView == true) {
+				dayView = false
+				if (noneListPopup == 1) {
+					$("#btns2").children("li:first").children("img").attr({"src": "img/radio_off.png"})
+					$("#btns2").children("li:last").children("img").attr({"src": "img/radio_on.png"})
+				} else {
+					$("#btns3").children("p:last").children("img").attr({"src": "img/radio_off.png"})
+					$("#btns3").children("p:first").children("img").attr({"src": "img/radio_on.png"})
+				}
+				
+			} else {
+				dayView = true
+				if (noneListPopup == 1) {
+					$("#btns2").children("li:first").children("img").attr({"src": "img/radio_on.png"})
+					$("#btns2").children("li:last").children("img").attr({"src": "img/radio_off.png"})
+				} else {
+					$("#btns3").children("p:last").children("img").attr({"src": "img/radio_on.png"})
+					$("#btns3").children("p:first").children("img").attr({"src": "img/radio_off.png"})
+				}
+			}
+
+			if (noneListPopup == 1){
+				$(".columnShort").children("ul:gt(0)").children("li").each(animateBars)
+			} else {
+				$(".infoMaterials").children("div:eq(1)").children("ul:eq(0)").children("li").each(animateBars)
+			}
+
+			function animateBars(){
+				if ($(this).children(".empty")){
+					var x = $(this).parent().index(".columnShort ul")
+					var y = $(this).index()
+
+					if (noneListPopup == 2){
+						x = $(this).index()+1
+						y = infoNumber*2+1
+					}
+
+					var sumLinesTogether = [1,2]
+					if (y == 3){
+						sumLinesTogether = [4,5]
+					} else if (y == 5){
+						sumLinesTogether = [7,8,9]
+					} else if (y == 7){
+						sumLinesTogether = [11]
+					} else if (y == 9){
+						sumLinesTogether = [13,14,15,16]
+					}
+					
+					var needed = 0
+					for (i = 0; i < sumLinesTogether.length; i++){
+						if (dayView == true){
+							needed = needed + productionNeedDay[sumLinesTogether[i]][x-1]
+						} else{
+							needed = needed + productionNeedWeek[sumLinesTogether[i]][x-1]
+						}
+					}
+					needed = Math.floor(parseInt(needed*0.01)*100)
+
+					var stock = parseFloat($(this).children(".empty").children(".emptyNumber").html()) + 0.1*parseInt($(this).children(".empty").children(".emptyNumber").children("comma").html())
+					
+					//var scaleFactor = 100/(500000/stock+99)
+					//$(this).html(needed + " " + scaleFactor)
+					$(this).children(".empty").children(".full").children(".used").children("p").html(makeNumberSexy(needed/1000))
+					if (dayView == true){
+						var delta = parseInt($(this).children(".empty").children(".full").css("margin-right"))
+						var duration = 1100-needed/stock
+						if (duration < 500){
+							duration = 500
+						}
+
+						$(this).children(".empty").children(".full").children(".used").animate({"width": (needed/10)/stock+"%"}, duration = duration, "easeInOutQuart")
+						$(this).children(".empty").children(".full").children(".used.bgRed").css({"background-color": "#a3bacf"})
+						$(this).children(".empty").children(".full").children(".used.bgRed").parent().siblings(".emptyNumber").animate({"margin-left": -delta+"px"}, duration = duration)
+					} else {
+						var duration = needed/stock
+						if (duration > 1000){
+							duration = 1000
+						}
+
+						$(this).children(".empty").children(".full").children(".used").animate({"width": (needed/10)/stock+"%"}, duration = duration, "easeInOutQuart")
+						$(this).children(".empty").children(".full").children(".used.bgRed").css({"background-color": "#cfa3a3"})
+						$(this).children(".empty").children(".full").children(".used.bgRed").parent().siblings(".emptyNumber").delay(duration-900).animate({"margin-left": "0px"})
+					}
+				}
+			}
+		}
+	}
+	$("#btns2").children("li").on("click", switchDayWeek)
+	$("#btns3").children("p").on("click", switchDayWeek)
+
+
+	function switchTableGraph(){
+		if (graphView == true){
+			graphView = false
+			$("#graphImg").hide()
+			$("#btns4").children("p:first").children("img").attr({"src": "img/radio_on.png"})
+			$("#btns4").children("p:last").children("img").attr({"src": "img/radio_off.png"})
+			$("#infoNames").show().siblings("p").show()
+			$("#valTab").show()
+
+		} else {
+			graphView = true
+			$("#graphImg").show()
+			$("#btns4").children("p:first").children("img").attr({"src": "img/radio_off.png"})
+			$("#btns4").children("p:last").children("img").attr({"src": "img/radio_on.png"})
+			$("#infoNames").hide().siblings("p").hide()
+			$("#valTab").hide()
+
+		}
+	}
+	$("#btns4").children("p").on("click", switchTableGraph)
+
+	// nummer hinter komma klein schreiben
+	function makeNumberSexy(number){
+		var beforeComma = Math.floor(number)
+		var afterComma = parseInt((number - beforeComma)*10)
+
+		return (beforeComma + ",<comma>" + afterComma + "</comma>")
+	}
+
 
 	// click on information
 	function clickInfo(){
-		if ($(this).css("opacity") > 0.9 ){
+		if ($(this).css("opacity") > 0.9 && $("#warningPopup").css("opacity") < 0.1){
 			//console.log($(this).attr("data-infoId"))
 
 			var x = parseFloat($(this).attr("data-x"))
 			var y = parseFloat($(this).attr("data-y"))
 			var marginX = _W/2-2*x
 			var marginY = _H/2-2*y-2*mapMarginDefault
+			infoNumber = $(this).index(".mapInfo")
 
 			// map an neue Stelle schieben
 			$("#mapDiv #map").stop(true).animate({"width": "200%", "margin-left": marginX+"px", "margin-top": marginY+"px", "opacity": 1}, duration = 700)
+			$(".night").delay(100).animate({"opacity": 0})
 
 			// mapInfos an neue Stelle schieben und ausblenden
 			$("#mapDiv .mapInfo").each(function(index, value) {
@@ -100,15 +260,19 @@ $(document).ready(function(){
 				}
 			});
 
-			$("#popup").stop(true).animate({"opacity": 1}, duration = 500);
+			$("#popup").stop(true).animate({"opacity": 1}, {duration: 500, queue: false})
 			$("#popup").css({"pointer-events" : "auto"})
+			$("#popup").css({"background-position" : "-210px -60px", "background-size": "1024px"})
+			$("#popup").animate({"background-size": "2048px", "background-position-x" : (-x*2+322) + "px", "background-position-y": (-y*2+85+mapMarginDefault) + "px"}, {duration: 700, queue: false})
 
 			// im popup informationen anpassen
-			$("#popup h2").html($(this).children("h2").html())
-
+			$("#popup h2").html($(this).children("h2").html() + " <time>" + $(this).children("h3").html() + "</time>")
+			$("#graphImg").attr({"src": "img/graph_" + infoNumber + ".png"})
+	
 			// auf produktions-tab resetten
 			$("#popup h3").removeClass("activebtn")
 			$("#popup .preselected").addClass("activebtn")
+			$("#popup .preselected").siblings().css({"background-color": "white"})
 			// soundso viele tabs für die linien machen
 			$("#valTab").children().remove()
 			$(".scrollableY2").children().remove()
@@ -136,37 +300,611 @@ $(document).ready(function(){
 
 
 	// click on map: load home
-	$("#mapDiv #background").on("click", loadHome)
+	function goHomeMaybe(){
+		if ($("#map:animated").width() == null){
+			loadHome()
+		}
+	}
+	$("#closeBtn").on("touchstart", function(){
+		$(this).css({"opacity": 0.5})
+	})
+	$("#closeBtn").on("click", function(){
+		$(this).css({"opacity": 0.3})
+		goHomeMaybe()
+	})
+	$("#mapDiv #background").on("click", goHomeMaybe)
+
 
 	// click on toggle
 	function toggleViews(){
-		console.log("toggle");
-		if ($(this).attr("src") == "img/list_filled.png"){
-			$(this).attr({"src": "img/world_filled.png"})
-			//$("#toggleText").html("Karte")
-			$("#technical").stop(true).css({"pointer-events": "auto", "margin-top": "700px", "display": "block"}).animate({"margin-top" : "100px"}, 400)
+		console.log("toggle:" + $(this).index())
+		$("#tableTabs h4").css({"background-color": "#568"})
+
+		if ($(this).index() == 0){
+			if (showingTable == false ){
+				$("#btns2").animate({"opacity": 1})
+			}
+		}
+
+		if ($(this).index() == 4){
+			showWarningCoperion()
+
 		} else {
-			$(this).attr({"src": "img/list_filled.png"})
-			//$("#toggleText").html("Liste")
-			$("body").css({"overflow": "hidden"})
-			$("#technical").stop(true).animate({"margin-top" : "700px"}, 400, function(){
-				$(this).css({"pointer-events": "none", "display": "none"})
-				$("body").css({"overflow": "visible"})
-			})
+			hideExtended()
+
+			//if ($(this).attr("src") == "img/list_filled_fafafa.png"){
+			if (showingTable == false){
+				showingTable = true
+				buildTable($(this).index())
+				$(this).siblings().animate({"bottom": "-40px"})
+				$("#closeBtn2").animate({"opacity": 0.3})
+				$("#techLegend").animate({"opacity": 1})
+				dayView = false
+				$("#btns2").children("li:first").children("img").attr({"src": "img/radio_off.png"})
+				$("#btns2").children("li:last").children("img").attr({"src": "img/radio_on.png"})
+
+				//$(this).attr({"src": "img/world_filled_blau.png"})
+				//$("#toggleText").html("Karte")
+				$("#technical").stop(true).css({"pointer-events": "auto", "margin-top": "780 px", "display": "block"}).animate({"margin-top" : "75px"}, 400)
+			} else {
+				//$(this).attr({"src": "img/list_filled_fafafa.png"})
+				//$("#toggleText").html("Liste")
+				showingTable = false
+				$("#tableTabs h4").animate({"bottom": "0px"})
+				$("#closeBtn2").animate({"opacity":0})
+				$("#techLegend").animate({"opacity":0})
+				$("#btns2").animate({"opacity": 0})
+
+				$("body").css({"overflow": "hidden"})
+				$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
+					$(this).css({"pointer-events": "none", "display": "none"})
+					$("body").css({"overflow": "visible"})
+				})
+			}
 		}
 	}
-	$("#toggle").on("touchend", toggleViews)
+	//$("#toggle").on("touchend", toggleViews)
+
+	$("#closeBtn2").on("touchstart", function(){
+		$(this).css({"opacity": 0.5})
+	})
+	$("#closeBtn2").on("click", function(){
+		$(this).css({"opacity": 0.3})
+		toggleViews()
+	})
+
+	// table tabs
+	$("#tableTabs h4").on("touchstart", function(){
+		$(this).css({"background-color": "#457"})
+	})
+	$("#tableTabs h4").on("touchend", toggleViews)
+
+
+	// PRODUCTION PLAN EINMAL LADEN
+	function loadPlan(){
+
+		var $productionPlanColumn = $(".productionPlanColumn")
+
+		for(i = 0; i < tableHeads[1].length; i++){
+			$productionPlanColumn.first().clone().insertAfter($(".productionPlanColumn").last()).children("h4").html(tableHeads[1][i] + " <img src='img/toggleTable.png' width = 11 class = 'collapseBtn'>")
+
+			$productionPlanColumn = $(".productionPlanColumn")
+
+			// headings hinzufügen
+			for (k = 0; k < tableSubHeads[1][i].length; k++){
+				if (k >= 1){
+					$(".productionPlanColumn").last().children("ul").last().clone().insertAfter($(".productionPlanColumn").last().children("ul").last())
+				}
+
+				$(".productionPlanColumn").last().children("ul").last().children(".tabHeading").html(tableSubHeads[1][i][k])
+			}
+		}
+		$(".productionPlanColumn").insertAfter($(".productionPlanColumn:first"))
+		$(".productionPlanColumn:first").remove()
+
+
+		$("#techNames").children().each(function(){
+			if ($(this).children("dot").length == 1){
+				$(this).show()
+			}
+		})
+
+		$(".productionPlanColumn ul").css({"width": "52px"})
+
+		// heute schwarz färben
+		$(".tabHeading").each(function(){
+			if ($(this).html() == tage[heute.getDay()]){
+				$(this).css({"background-color": "#2e2e2e", "color": "white"})
+				todayTabNumber = $(this).index(".tabHeading")
+				return false
+			}
+		})
+
+		$productionPlanColumn.children("ul").children("li").each(function(){
+		 	if ($(this).html() == " - "){
+		 		var y = $(this).index("")
+		 		var x = $(this).parent().index(".productionPlanColumn ul")*3
+
+		 		var v1 = 0
+		 		var v2 = 0
+		 		var v3 = 0
+		 		if (productionPlan[y].length > 1){
+		 			v1 = productionPlan[y][x]
+		 			v2 = productionPlan[y][x+1]
+		 			v3 = productionPlan[y][x+2]
+		 		}
+
+		 		if (v1 == 0){
+		 			$(this).html("<div class = 'freeTime'></div>")
+		 		} else if (v1 == 7){
+		 			$(this).html("<div class = 'waitingTime'></div>")
+		 		} else if (v1 == 6){
+		 			$(this).html("<div class = 'rystTime'></div>")
+		 		} else if (v1 == 8){
+		 			$(this).html("<div class = 'emptyTime'></div>")
+		 		} else {
+		 			$(this).html("<div class = 'productionTime clickableEntry'><p>" + v1 + "</p></div>")
+		 		}
+
+		 		if (v2 == 0){
+		 			$(this).append("<div class = 'freeTime'></div>")
+		 		} else if (v2 == 7){
+		 			$(this).append("<div class = 'waitingTime'></div>")
+		 		} else if (v2 == 6){
+		 			$(this).append("<div class = 'rystTime'></div>")
+		 		} else if (v2 == 8){
+		 			$(this).append("<div class = 'emptyTime'></div>")
+		 		} else {
+		 			$(this).append("<div class = 'productionTime clickableEntry'><p>" + v2 + "</p></div>")
+		 		}
+
+		 		if (v3 == 0){
+		 			$(this).append("<div class = 'freeTime'></div>")
+		 		} else if (v3 == 7){
+		 			$(this).append("<div class = 'waitingTime'></div>")
+		 		} else if (v3 == 6){
+		 			$(this).append("<div class = 'rystTime'></div>")
+		 		} else if (v3 == 8){
+		 			$(this).append("<div class = 'emptyTime'></div>")
+		 		} else {
+		 			$(this).append("<div class = 'productionTime clickableEntry'><p>" + v3 + "</p></div>")
+		 		}
+				
+		 	}
+		 	if ($(this).children("div:eq(0)").html() == $(this).children("div:eq(1)").html() && $(this).children("div:eq(1)").html() == $(this).children("div:eq(2)").html() && $(this).children("div:eq(0)").html()){
+		 		$(this).children("div:eq(0)").children("p").css({"opacity":0})
+		 		$(this).children("div:eq(2)").children("p").css({"opacity":0})
+		 	}
+		 	else if ($(this).children("div:eq(0)").html() == $(this).children("div:eq(1)").html()){
+		 		$(this).children("div:eq(0)").children("p").css({"opacity":0})
+		 		$(this).children("div:eq(1)").children("p").addClass("halfToLeft")
+		 		if ($(this).children("div:eq(2)").html() != ""){
+		 			$(this).children("div:eq(2)").addClass("smallerBoxL")
+		 		}
+		 	}
+		 	else if ($(this).children("div:eq(1)").html() == $(this).children("div:eq(2)").html() && $(this).children("div:eq(1)").html() != ""){
+		 		$(this).children("div:eq(1)").children("p").css({"opacity":0})
+		 		$(this).children("div:eq(2)").children("p").addClass("halfToLeft")
+		 		if ($(this).children("div:eq(0)").html() != ""){
+		 			$(this).children("div:eq(0)").addClass("smallerBoxR")
+			 	}
+		 	}
+		})
+	}
+	loadPlan()
+
+	// Materialbedarf für Zeiten ausrechnen
+	function calculateMaterial(){
+		for (i = 0; i < productionPlan.length; i++){
+			for (k = 0; k < productionPlan[i].length; k++){
+				var materials = recipeValues[productionPlan[i][k]-1]
+				for (l = 0; l < 7; l++){
+					if (materials && k <= 1*3-1){
+						productionNeedDay[i][l] = productionNeedDay[i][l] + materials[l]*8
+					}
+					if (materials && k <= 2*3-1){
+						productionNeedTwoDays[i][l] = productionNeedTwoDays[i][l] + materials[l]*8
+					}
+					if (materials && k <= 7*3-1){
+						productionNeedWeek[i][l] = productionNeedWeek[i][l] + materials[l]*8
+					}
+				}
+			}
+		}
+	}
+	calculateMaterial()
+
+	// heute blinken lassen
+	var blinkToday = false
+	function updateDate(){
+		if (blinkToday == true){
+			blinkToday = false
+			$(".darkenToday").removeClass("darkenToday")
+
+		} else {
+			blinkToday = true
+			var earlyLateNight = 2
+			if (heute.getHours() >= 6 && heute.getHours() < 14){
+				earlyLateNight = 0
+			} else if (heute.getHours() < 22){
+				earlyLateNight = 1
+			}
+			var atRecipe = [0,7,7,0,7,7,0,7,7,7,0,7,0,7,7,7,7]
+
+			console.log($(".productionPlanColumn").children("ul").eq(todayTabNumber).children("li").length)
+			if (earlyLateNight == 1){
+				$(".productionPlanColumn").children("ul").eq(todayTabNumber).children("li").each(function(i,v){
+					if (i <= 6){
+						$(this).children("div:nth-child(3n-2)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-2)").children("p").html()
+					} else if (i <= 12){
+						$(this).children("div:nth-child(3n-1)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-1)").children("p").html()
+					} else {
+						$(this).children("div:nth-child(3n-0)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-0)").children("p").html()
+					}
+				})
+			} else if (earlyLateNight == 0){
+				$(".productionPlanColumn").children("ul").eq(todayTabNumber-1).children("li").each(function(i,v){
+					if (i <= 6){
+						$(this).children("div:nth-child(3n-0)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-0)").children("p").html()
+					}
+				})
+				$(".productionPlanColumn").children("ul").eq(todayTabNumber).children("li").each(function(i,v){
+					if (i <= 6){
+					} else if (i <= 12){
+						$(this).children("div:nth-child(3n-2)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-2)").children("p").html()
+					} else {
+						$(this).children("div:nth-child(3n-1)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-1)").children("p").html()
+					}
+				})
+			} else if (earlyLateNight == 2){
+				$(".productionPlanColumn").children("ul").eq(todayTabNumber).children("li").each(function(i,v){
+					if (i <= 6){
+						$(this).children("div:nth-child(3n-1)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-1)").children("p").html()
+					} else if (i <= 12){
+						$(this).children("div:nth-child(3n-0)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-0)").children("p").html()
+					}
+				})
+				$(".productionPlanColumn").children("ul").eq(todayTabNumber+1).children("li").each(function(i,v){
+					if (i > 12){
+						$(this).children("div:nth-child(3n-2)").addClass("darkenToday")
+						atRecipe[i] = $(this).children("div:nth-child(3n-2)").children("p").html()
+					}
+				})
+			}
+
+			// auf hauptseite durchsatz anpassen
+			atRecipe.splice(12,1)
+			atRecipe.splice(10,1)
+			atRecipe.splice(6,1)
+			atRecipe.splice(3,1)
+			atRecipe.splice(0,1)
+			$(".information").children("li").each(function(i,v){
+				if (atRecipe[i]){
+					$(this).children("value:first").html(recipeValues[atRecipe[i]-1][7])
+				} else {
+					$(this).children("value:first").html("0 kg/h")
+				}
+			})
+
+			// im infofenster übernehmen
+			if ($("#popup").css("opacity") > 0.5 && onInfoPage == 2){
+				var plus = 0
+				if (infoNumber == 1){
+					plus = 3
+				} else if (infoNumber == 2){
+					plus = 6
+				} else if (infoNumber == 3){
+					plus = 10
+				} else if (infoNumber == 4){
+					plus = 12
+				}
+				$("#valTab ul li").remove()
+				$("#valTab").children("div").each(function(i1,v1){
+					$(".productionPlanColumn").children("ul").each(function(i2,v2){
+						var content = $(this).children("li").eq(i1+plus+1).html()
+						$("#valTab ul").eq(i1).append("<li>" + content + "</li>")
+					})
+				})
+			}
+		}
+	}
+	updateDate()
+	setInterval(updateDate, 800)
+
+	// materialbars laden
+	function loadMaterialBar(element, x,y, inPopup){
+		var sumLinesTogether = [1,2]
+		if (y == 3){
+			sumLinesTogether = [4,5]
+		} else if (y == 5){
+			sumLinesTogether = [7,8,9]
+		} else if (y == 7){
+			sumLinesTogether = [11]
+		} else if (y == 9){
+			sumLinesTogether = [13,14,15,16]
+		}
+		//element.html(x + " " + y)
+		
+		var needed = 0
+		for (i2 = 0; i2 < sumLinesTogether.length; i2++){
+			needed = needed + productionNeedWeek[sumLinesTogether[i2]][x-1]
+		}
+		var stock = stockData[y][x-1]
+
+		if (needed != 0){
+			//$(this).html(needed)	
+			element.html("<div class = 'empty'><div class = 'full'><div class = 'used'><p>a</p></div><p></p></div><p class = 'emptyNumber'>c</p></div>")
+
+			needed = Math.floor(parseInt(needed*0.01)*100)
+			var scaleFactor = 100/(500000/stock+99)
+
+			var duration = scaleFactor*1000
+			if (stock < needed){
+				scaleFactor = scaleFactor*stock/needed
+			}
+			var w1 = scaleFactor*100
+			var w2 = 100*needed/stock
+
+			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy(stock/1000) + "&thinsp;t").siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000))
+
+			if (stock < needed){
+
+				if (inPopup == true) {
+					w1 = w1*4
+					w2 = w2*w1*0.01
+				} else {
+					w1 = w1 * element.children(".empty").width()*0.01
+					w2 = w2*w1*0.01
+				}
+				var delta = w2 - w1
+				element.children(".empty").children(".full").css({"margin-right": 0}).animate({"margin-right": delta + "px"}, {duration: duration, queue: false}).children(".used").addClass("bgRed")
+			}
+		}
+	}
+
+	// productbars laden (ähnlich materialbars)
+	function loadProductBar(element, x,y, inPopup){
+		var sumLinesTogether = [1,2]
+		if (y == 3){
+			sumLinesTogether = [4,5]
+		} else if (y == 5){
+			sumLinesTogether = [7,8,9]
+		} else if (y == 7){
+			sumLinesTogether = [11]
+		} else if (y == 9){
+			sumLinesTogether = [13,14,15,16]
+		}
+		//element.html(x + " " + y)
+		
+		var needed = soldProductData[y][x-1]
+		var stock = finishedProductData[y][x-1]
+
+		if (needed != 0){
+			//$(this).html(needed)	
+			element.html("<div class = 'empty'><div class = 'full'><div class = 'used'><p>a</p></div><p></p></div><p class = 'emptyNumber'>c</p></div>")
+
+			needed = Math.floor(parseInt(needed*0.01)*100)
+			var scaleFactor = 10/(240000/stock+9)
+
+			var duration = scaleFactor*1000
+			if (stock < needed){
+				scaleFactor = scaleFactor*stock/needed
+			}
+			var w1 = scaleFactor*100
+			var w2 = 100*needed/stock
+
+			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy(stock/1000) + "&thinsp;t").siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000))
+
+			if (stock < needed){
+
+				if (inPopup == true) {
+					w1 = w1*4
+					w2 = w2*w1*0.01
+				} else {
+					w1 = w1 * element.children(".empty").width()*0.01
+					w2 = w2*w1*0.01
+				}
+				var delta = w2 - w1
+				element.children(".empty").children(".full").css({"margin-right": 0}).animate({"margin-right": delta + "px"}, {duration: duration, queue: false}).children(".used").addClass("bgRed")
+			}
+		}
+	}
+
+	// VERSCHIEDENE TABELLEN LADEN
+	function buildTable(number){
+
+		console.log("prepare "+number)
+		isAtPage = number
+
+		// spalten löschen
+		$("#techLegend").html("")
+		$(".columnLong").first().show().css({"margin-right": 0})
+		$(".columnShort").first().show().css({"margin-right": 0})
+		$(".columnLong").each(function(index, value){
+			if (index >= 1){
+				$(this).remove()
+			}
+		})
+		$(".columnShort").each(function(index, value){
+			if (index >= 1){
+				$(this).remove()
+			}
+		})
+
+		// plan ein-/ ausblenden
+		if (number == 1){
+			$(".productionPlanColumn").show()
+		} else{
+			$(".productionPlanColumn").hide()
+		}
+
+		// spalte 1 klonen
+		if (number == 0 || number == 2) {
+			for(i = 0; i < tableHeads[number].length; i++){
+				if (number == 0){
+					$(".columnShort").first().clone().insertAfter($(".columnShort").last()).children("h4").html(tableHeads[number][i] + " <img src='img/toggleTable.png' width = 11 class = 'collapseBtn'>")
+				} else {
+					$(".columnShort").first().clone().insertAfter($(".columnShort").last()).children("h4").html(tableHeads[number][i]).addClass("clickableEntry")
+				}
+
+				// headings hinzufügen
+				for (k = 0; k < tableSubHeads[number][i].length; k++){
+					if (k >= 1){
+						$(".columnShort").last().children("ul").last().clone().insertAfter($(".columnShort").last().children("ul").last())
+					}
+
+					$(".columnShort").last().children("ul").last().children(".tabHeading").html(tableSubHeads[number][i][k])
+				}
+			}
+			if (number == 1){
+				$("#techLegend").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'> ▮</abc>stock")
+			} else {
+				$("#techLegend").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>sold <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'> ▮</abc>stock")
+			}
+			
+		} else if (number != 1) {
+			for(i = 0; i < tableHeads[number].length; i++){
+				$(".columnLong").first().clone().insertAfter($(".columnLong").last()).children("h4").html(tableHeads[number][i] + " <img src='img/toggleTable.png' width = 11 class = 'collapseBtn'>")
+
+				// headings hinzufügen
+				for (k = 0; k < tableSubHeads[number][i].length; k++){
+					if (k >= 1){
+						$(".columnLong").last().children("ul").last().clone().insertAfter($(".columnLong").last().children("ul").last())
+					}
+
+					$(".columnLong").last().children("ul").last().children(".tabHeading").html(tableSubHeads[number][i][k])
+				}
+			}
+			$(".columnShort").insertAfter($(".columnLong:first"))
+		}
+		$(".countryInfo").last().css({"margin-right": 300+"px"})
+		$(".columnLong").first().hide()
+		$(".columnShort").first().hide()
+
+		// DIESES VERSCHISSENE CSS UMGEHEN, DAS DIE ÜBERSCHRIFT NICHT KÜRZEN KANN
+		if (number != 0 && number != 2){
+			$(".countryInfo:gt(1)").each(function(){
+				$(this).children("h4").css({"max-width" : $(this).children("ul").length*140 + "px"})
+			})
+		}
+
+		// WERTE EINFÜGEN
+
+		if (number == 0 || number == 2){
+			// position rausfinden:
+			// $(".countryInfo").children("ul").children("li").each(function(){
+			// 	if ($(this).html() == " - "){
+			// 		$(this).html($(this).parent().index(".countryInfo ul") + " / " + $(this).index())
+			// 	}
+			// })
+
+			$("#techNames").children().each(function(){
+				if ($(this).children("dot").length == 1){
+					$(this).hide()
+				}
+			})
+			$("#extraLine").show()
+
+			// kleine balken laden
+			$(".columnShort").children("ul:gt(0)").css({"width": "180px"}).children("li").each(function(){
+				if ($(this).html() == " - "){
+					var x = $(this).parent().index(".columnShort ul")
+					var y = $(this).index()
+					if (number == 0){
+						loadMaterialBar($(this), x,y, false)
+					} else {
+						loadProductBar($(this), x,y, false)
+					}
+				}
+			})
+		
+		} else if (number == 1){
+			// production plan
+			$("#techNames").children().each(function(){
+				if ($(this).children("dot").length == 1){
+					$(this).show()
+				}
+			})
+			$("#extraLine").hide()
+
+			$("#techLegend").html("<abc style = 'color: #29cc29; font-size: 14pt'> ▮</abc>production <abc style = 'color: #ffca00; font-size: 14pt; margin-left: 20px'> ▮</abc>set-up <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'> ▮</abc>maintenance")
+
+		} else if (number == 2){
+			// finished products
+			$("#techLegend").html("")
+
+		} else if (number == 3){
+			// efficiency
+			$("#techNames").children().each(function(){
+				if ($(this).children("dot").length == 1){
+					$(this).show()
+				}
+			})
+			$("#extraLine").hide()
+
+			$(".columnLong").children("ul").children("li").each(function(){
+				if ($(this).html() == " - "){
+					var x = $(this).index()
+					var y = $(this).parent().index(".columnLong ul")
+					if (y > 0){
+						$(this).html(efficiencyVal[x-1][y-1])
+						//$(this).html(x + " " + y)
+						if ((x == 4 && y == 7) || (x == 5 && y == 4) || (x == 5 && y == 5) || (x == 5 && y == 6) || (x == 5 && y == 7) || (x == 5 && y == 9) || (x == 8 && y == 8) || (x == 9 && y == 6) || (x == 13 && y == 10) || (x == 15 && y == 9)){
+							$(this).css({"color": "#ff8400"})
+						} else if ((x == 15 && y == 4) || (x == 15 && y == 5) || (x == 15 && y == 9) || (x == 15 && y == 10) || (x == 16 && y == 4) || (x == 16 && y == 5) || (x == 16 && y == 6) || (x == 16 && y == 9) || (x == 16 && y == 10) || (x == 13 && y == 7) || (x == 14 && y == 8)){
+							$(this).css({"color": "red"})
+						}
+					}
+				}
+			})
+			$("#techLegend").html("*in the last 12 months")
+		}
+
+	}
+
+
+
+
 
 
 	// click on btn
 	function clickOnBtn(givenNumber){
 
 		var number = givenNumber
+		onInfoPage = 0
 		if (jQuery.type(givenNumber) != "number"){
 			number = $(this).attr("data-btn")
 		}
 		$(this).siblings().children("img").attr({"src": "img/radio_off.png"})
 		$(this).children("img").attr({"src": "img/radio_on.png"})
+
+		if (number != 8){
+			$("#btns4").hide()
+		}
+
+		// auf wochenansicht resetten
+		dayView = false
+		$("#btns3").children("p:last").children("img").attr({"src": "img/radio_off.png"})
+		$("#btns3").children("p:first").children("img").attr({"src": "img/radio_on.png"})
+		graphView = true
+		switchTableGraph()
+
+		// richtige seite anzeigen
+		if (number == 4 || number == 6){
+			$(".infoValues").hide()
+			$(".infoMaterials").show()
+		} else if (number == 5 || number == 7){
+			$(".infoValues").show()
+			$(".infoMaterials").hide()
+		}
 
 		// buttons am linken rand
 		if (number <= 3){
@@ -184,99 +922,237 @@ $(document).ready(function(){
 
 			$(".infoMaterials li").remove()
 
-			// rohmaterialien erfinden
-			for(i = 0; i < parseInt(Math.random()*20+10); i++){
-				$(".infoMaterials").children("div:eq(0)").children("ul").append("<li> " + materialListe[parseInt(Math.random()*10)] + " </li>")
+			for(i = 0; i < 7; i++){
+				$aboutUlHead = $(".infoMaterials").children("div:eq(0)").children("ul")
+				$aboutUlVal = $(".infoMaterials").children("div:eq(1)").children("ul")
+				$aboutUlVal.append("<li>-</li>")
+
+				var x = $aboutUlVal.children("li:last").index()
+				var y = infoNumber*2+1
+				$aboutUlHead.append("<li>"+tableHeads[0][x]+"</li>")
+				loadMaterialBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			// materialbalken anhängen
-			$(".infoMaterials").children("div:eq(0)").children("ul").children("li").each(function(index, value){
-				var completeNumber = parseInt(Math.random()*120+10)/10
-				$(".infoMaterials").children("div:eq(1)").children("ul").append("<li><div class = 'empty'><div class = 'full'><div class = 'used'><p>aa</p></div><p>bb</p></div><p>"+completeNumber+" t</p></div></li>")
-				// $(".infoMaterials").children("div:eq(2)").children("ul").append ("<li>"+Math.floor(Math.random()*100)+" t</li>").children("li").css({"right": "100px"})
-				// $(".infoMaterials").children("div:eq(3)").children("ul").append ("<li>"+Math.floor(Math.random()*100)+"%</li>")
-				// $(".infoMaterials").children("div:eq(4)").children("ul").append ("<li>"+Math.floor(Math.random()*100)+"%</li>")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>planned")
+			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'> ▮</abc>stock")
+			$("#btns3").show()
+
+		} else if (number == 5){
+			// production plan
+			onInfoPage = 2
+			$(".scrollableY.infoValues").children("p").html("")
+			$("#infoNames li").remove()
+			for(i = 0; i < tableHeads[1].length; i++){
+				$("#infoNames").append("<li>" + tableHeads[1][i] + "</li>")
+				for (k = 0; k < tableSubHeads[1][i].length; k++){
+					$("#infoNames").append("<li style = 'margin-left: 96px; padding-left: 4px; padding-right: 4px'>" + tableSubHeads[1][i][k] + "</li>")
+					if (k == 0){
+						$("#infoNames li:last").css({"margin-top": "-30px"})
+					} else if (k >= 5){
+						$("#infoNames li:last").css({"opacity": 0.5})
+					}
+					if (i == 0 && $("#infoNames li:last").html() == tage[heute.getDay()]){
+						$("#infoNames li:last").css({"background-color": "#2e2e2e", "color": "white"})
+					}
+				}
+			}
+
+			// einträge von productionPlanColumn kopieren
+			var plus = 0
+			if (infoNumber == 1){
+				plus = 3
+			} else if (infoNumber == 2){
+				plus = 6
+			} else if (infoNumber == 3){
+				plus = 10
+			} else if (infoNumber == 4){
+				plus = 12
+			}
+			$("#valTab ul li").remove()
+			$("#valTab").children("div").each(function(i1,v1){
+				$(".productionPlanColumn").children("ul").each(function(i2,v2){
+					var content = $(this).children("li").eq(i1+plus+1).html()
+					$("#valTab ul").eq(i1).append("<li>" + content + "</li>")
+				})
 			})
 
-			// kleine balken laden
-			$("#popup .full").each(function(index, value){
-				var fullPercentage = parseInt(Math.random()*30+60)
-				$(this).css({"width": 0}).animate({"width": Math.random()*30+60+"%"}, duration = fullPercentage*10)
-				$(this).children("p").html(parseFloat(parseInt(0.1*fullPercentage*(parseFloat($(this).siblings("p").html())))/10) + " t")
-			})
-			$("#popup .used").each(function(index, value){
-				var usedPercentage = parseInt(Math.random()*80+10)
-				$(this).css({"width": 0}).animate({"width": usedPercentage+"%"}, duration = usedPercentage*10+200)
-				$(this).children("p").html(parseFloat(parseInt(0.1*usedPercentage*(parseFloat($(this).siblings("p").html())))/10) + " t")
-				// diesen wert noch von dem in der mitte abziehen?
-				$(this).siblings("p").html(Math.floor(10*(parseFloat($(this).siblings("p").html())-parseFloat($(this).children("p").html())))/10 + " t")
-			})
+		} else if (number == 6){
+			// finished products
+			$(".infoMaterials li").remove()
 
-			$(".infoValues").hide()
-			$(".infoMaterials").show()
-		}
-		else if (number == 5){
-			$("#infoNames li").remove()
-			$("#infoNames").append("<li> Linie </li><li> Produkte </li><li> Auslastung </li><li> Tonnage </li><li> Rohmaterial </li><li> Ausfälle </li><li> Downtime </li><li> Maschinen </li>")
-		}
-		else if (number == 6){
-			$("#infoNames li").remove()
-			$("#infoNames").append("<li> Bestellungen </li><li> Lieferzeit </li><li> Lagerbestand </li><li> Wartungsbedarf </li>")
-		}
-		else if (number == 7){
-			$("#infoNames li").remove()
-			$("#infoNames").append("<li> Produktionsbestand </li><li> Verkaufspreis / kg </li><li> Herstellungskosten </li>")
-		}
-		else if (number == 8){
-			$("#infoNames li").remove()
-			$("#infoNames").append("<li> Unfälle </li><li> Krankheitstage</li><li> Alienobduktionen </li>")
-		}
+			for(i = 0; i < 5; i++){
+				$aboutUlHead = $(".infoMaterials").children("div:eq(0)").children("ul")
+				$aboutUlVal = $(".infoMaterials").children("div:eq(1)").children("ul")
+				$aboutUlVal.append("<li>-</li>")
 
-		// werte erfinden
-		if (number >= 5 && number <= 9){
-			$(".infoValues").show()
-			$(".infoMaterials").hide()
+				var x = $aboutUlVal.children("li:last").index()
+				var y = infoNumber*2+1
+				$aboutUlHead.append("<li class = 'clickableEntry' style = 'font-weight: normal'>Recipe "+ (x+1) +"</li>")
+				loadProductBar($aboutUlVal.children("li:last"), x+1,y, true)
+			}
+
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>sold")
+			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'> ▮</abc>stock")
+			$("#btns3").hide()
+
+		} else if (number == 7){
+			$("#btns4").show()
+			$(".scrollableY.infoValues").children("p").html("*in the last 12 months")
+			$("#infoNames li").remove()
+			for(i = 0; i < tableHeads[3].length; i++){
+				$("#infoNames").append("<li>" + tableHeads[3][i] + "</li>")
+			}
 
 			$("#valTab ul li").remove()
-			$("#infoNames li").each(function(index, value){
-				$("#valTab ul").each(function (index, value){
-					if (Math.random() < 0.1){
-						$(this).append ("<li class = 'clickableEntry'>"+Math.floor(Math.random()*100)+" •</li>")
-					} else {
-						$(this).append ("<li>"+Math.floor(Math.random()*100)+"</li>")
+			var plus = 0
+			if (infoNumber == 1){
+				plus = 3
+			} else if (infoNumber == 2){
+				plus = 6
+			} else if (infoNumber == 3){
+				plus = 10
+			} else if (infoNumber == 4){
+				plus = 12
+			}
+
+			$("#infoNames li").each(function(i1, v1){
+				$("#valTab ul").each(function (i2, v2){
+					$(this).append ("<li>" + efficiencyVal[i2+plus][i1] + "</li>")
+					var x = i2+plus+1
+					var y = i1+1
+					if ((x == 4 && y == 7) || (x == 5 && y == 4) || (x == 5 && y == 5) || (x == 5 && y == 6) || (x == 5 && y == 7) || (x == 5 && y == 9) || (x == 8 && y == 8) || (x == 9 && y == 6) || (x == 13 && y == 10) || (x == 15 && y == 9)){
+							$(this).children("li:last").css({"color": "#ff8400"})
+					} else if ((x == 15 && y == 4) || (x == 15 && y == 5) || (x == 15 && y == 9) || (x == 15 && y == 10) || (x == 16 && y == 4) || (x == 16 && y == 5) || (x == 16 && y == 6) || (x == 16 && y == 9) || (x == 16 && y == 10) || (x == 13 && y == 7) || (x == 14 && y == 8)){
+							$(this).children("li:last").css({"color": "red"})
 					}
 				})
 			})
+
+		} else if (number == 8){
+			showWarningCoperion()
+
 		}
+
+		// if (number >= 5 && number <= 6){
+		// 	$(".infoValues").show()
+		// 	$(".infoMaterials").hide()
+
+		// 	$("#valTab ul li").remove()
+		// 	$("#infoNames li").each(function(index, value){
+		// 		$("#valTab ul").each(function (index, value){
+		// 			if (Math.random() < 0.1){
+		// 				$(this).append ("<li class = 'clickableEntry'>"+Math.floor(Math.random()*100)+" •</li>")
+		// 			} else {
+		// 				$(this).append ("<li>"+Math.floor(Math.random()*100)+"</li>")
+		// 			}
+		// 		})
+		// 	})
+		// }
 
 		if (number > 3){
-			$(this).siblings().removeClass("activebtn")
-			$(this).addClass("activebtn")
+			if (number == 8){
+				$(this).removeClass("activebtn").css({"background-color": "white"})
+			}	else{
+				$(this).siblings().removeClass("activebtn").css({"background-color": "white"})
+				$(this).addClass("activebtn")
+			}
 		}
-
 	}
 	clickOnBtn(1);
 	$("#btns li").on("click", clickOnBtn)
-	$("#popup h3").on("click", clickOnBtn)
+	$("#popup h3").on("touchend", clickOnBtn)
+	$("#popup h3").on("touchstart", function(){
+		$(this).css({"background-color": "#eee"})
+	})
 
 	// click on clickableEntry
 	function clickOnClickableEntry(){
-		$("#popup_extended").stop().animate({"opacity": 1}, duration = 150)
-		$("#popup_extended").css({"left": parseInt($(this).offset().left)-80+"px", "top": parseInt($(this).offset().top)+30+"px"})
+		if ($("#popup_extended").css("opacity") < 0.1){
+			var left = parseInt($(this).offset().left)
+			var top = parseInt($(this).offset().top)
+			var content = $(this).children("p").html()
+			var contentSelf = $(this).html()
+
+			if (contentSelf == "Recipe 1"){
+				content = 1
+			} else if (contentSelf == "Recipe 2"){
+				content = 2
+			} else if (contentSelf == "Recipe 3"){
+				content = 3
+			} else if (contentSelf == "Recipe 4"){
+				content = 4
+			} else if (contentSelf == "Recipe 5"){
+				content = 5
+			}
+
+			// inhalt austauschen
+			if (content) {
+				var number = parseInt(content)
+				$("#popup_extended").children("ul").children("li").remove()
+				$("#popup_extended").children("ul").append("<li class = 'heading'>" + recipes[number-1][0] + "</li>")
+				for (i = 0; i < recipes[number-1].length-1; i++){
+					$("#popup_extended").children("ul").append("<li>" + recipes[number-1][i+1] + "</li>")
+				}
+			}
+
+			// ryst / waiting info
+			if ($(this).hasClass("rystTime")){
+				left = left + 4
+				$("#popup_extended").children("ul").children("li").remove()
+				$("#popup_extended").children("ul").append("<li class = 'heading'>set-up</li>")
+			} else if ($(this).hasClass("waitingTime")){
+				left = left + 4
+				$("#popup_extended").children("ul").children("li").remove()
+				$("#popup_extended").children("ul").append("<li class = 'heading'>maintenance</li>")
+			}
+
+			// platzieren
+			if (showingTable == true){
+				if (content){
+					top = top - 5
+				} else {
+					left = left + 20
+				}
+				if (contentSelf == "Recipe 1" || contentSelf == "Recipe 2" || contentSelf == "Recipe 3" || contentSelf == "Recipe 4" || contentSelf == "Recipe 5"){
+					top = top + 13
+					left = left + 83
+				}
+			} else if (contentSelf == "Recipe 1" || contentSelf == "Recipe 2" || contentSelf == "Recipe 3" || contentSelf == "Recipe 4" || contentSelf == "Recipe 5"){
+				left = left + 20
+			}
+			if($(this).hasClass("attentionIcn") == true){
+				left = 352
+				top = 160
+			}
+			$("#popup_extended").stop().animate({"opacity": 1}, duration = 150)
+			$("#popup_extended").css({"left": left-$("#popup_extended").width()/2 + 10+"px", "top": top + 40 +"px"})
+			$("#popup_extended img").css({"margin-left": ($("#popup_extended").width()/2-25) + "px"})
+
+		}	else{
+			hideExtended()
+		}
 	}
-	$(document).on('click', '.clickableEntry', clickOnClickableEntry)
+	$(document).on("click", ".clickableEntry", clickOnClickableEntry)
+	$(document).on("click", "#popup .attentionIcn", clickOnClickableEntry)
+	$(document).on("click", "#popup .rystTime", clickOnClickableEntry)
+	$(document).on("click", "#popup .waitingTime", clickOnClickableEntry)
 
 	function hideExtended(){
 		$("#popup_extended").animate({"opacity": 0}, duration = 150)
 	}
 	$("#popup").on("click", hideExtended)
+	$("#technical").on("touchstart", hideExtended)
 
 
 	// technische ansicht: spalten abwechselnd färben
-	$(".countryInfo").children("ul").each(function(index1, value1){
+	$("#technical").children("div").children("ul").each(function(index1, value1){
 		$(this).children("li").each(function(index2, value2){
-			if (index2%2 == 0){
-				$(this).css({"background-color":"#457"})
+			if (index2 != 0 && $(this).html() != " <br><br> " && $(this).html() != " <br> " ){
+				if (index2%2 == 0){
+					$(this).css({"background-color":"#f6f6f6"})
+				} else {
+					$(this).css({"background-color":"#e3e3e3"})
+				}
 			}
 		})
 	})
@@ -290,21 +1166,114 @@ $(document).ready(function(){
 
 	// technische ansicht: spalten ausblenden
 	function toggleTechTab(){
-		var toWidth = 30
-		var toOpacity = 0
+		if ($(this).hasClass("clickableEntry") == false){
+			var toWidth = 30
+			var toOpacity = 0
 
-		if ($(this).parent().data("originalWidth") == null){
-			$(this).parent().data("originalWidth", $(this).parent().width())
-		}
+			if ($(this).parent().data("originalWidth") == null){
+				$(this).parent().data("originalWidth", $(this).parent().width())
+			}
 
-		if ($(this).parent().width() < 32){
-			toWidth = $(this).parent().data("originalWidth")
-			toOpacity = 1
+			if ($(this).parent().width() < 32){
+				toWidth = $(this).parent().data("originalWidth")
+				toOpacity = 1
+			}
+			$(this).parent().stop().animate({"width": toWidth+ "px"}, duration = 500)
+			$(this).siblings().stop().animate({"opacity": toOpacity}, duration = 500)
 		}
-		$(this).parent().stop().animate({"width": toWidth+ "px"}, duration = 500)
-		$(this).siblings().stop().animate({"opacity": toOpacity}, duration = 500)
 	}
-	$("#technical h4").on("click", toggleTechTab)
+	$(document).on("click", "#technical h4", toggleTechTab)
+
+
+	// Warning popup
+
+	// function showWarning(){
+	// 	$("#warningPopup").delay(2000).animate({"zoom": "100%", "opacity": 1}, duration = 350, "easeOutBack").css({"pointer-events": "auto"})
+	// 	if (didShowWarning == false){
+	// 		didShowWarning = true
+	// 		$("#theBrokenPlant").stop(true).delay(2000).queue(function(){
+	// 			// popup kann daneben auftauchen
+	// 			// light schnitte
+	// 			$(this).append('<div class = "attentionIcnContainer"> <img class = "attentionIcn" src = "img/attention_icn.png" width = 20> </div>')
+	// 		})
+	// 	}
+	// }
+	function showWarningCoperion(){
+		$("#warningPopup").animate({"zoom": "100%", "opacity": 1}, duration = 350, "easeOutBack").css({"pointer-events": "auto"})
+	}
+
+	setInterval(function(){
+		$(".attentionIcn").animate({"zoom":" 1.2", "vertical-align" : "-3px"}).animate({"zoom":" 1", "vertical-align": "-3px"})
+	}, 2000);
+
+	// auslöser: oben links hinklicken (soll das rein?)
+	//$("#header img:first").on("click", showWarning)
+
+	$("#warningPopup .answer").on("touchstart", function(){
+		$(this).css({"background-color": "#606060"})
+	})
+	$("#warningPopup .answer").on("touchend", function(e){
+		e.stopPropagation();
+		$(this).css({"background-color": "#6f7070"})
+		$("#warningPopup").animate({"zoom": "90%", "opacity": 0}).css({"pointer-events": "none"})
+		if ($(this).index(".answer") == 1){
+			//window.location.href = "https://mycoperion.coperion.com"
+		}
+	})
+
+
+	// exit app
+	$("#exitBtn").on("click", function(){
+		window.close()
+	})
+
+
+	// update time
+	function updateTime(){
+
+		//heute = new Date()
+
+		// zeit testen
+		//heute = new Date(1991, 08, 30, 10, 15, 30, 0)
+
+		$(".mapInfo h3").each(function(){
+			var hours = (24 + parseInt(heute.getHours()) + parseInt($(this).attr("data-timezone")))%24
+			var minutes = ("00" + heute.getMinutes()).substr(-2)
+
+			if (hours <= 12){
+				$(this).html(hours + ":" + minutes + " AM")
+			} else {
+				$(this).html(hours-12 + ":" + minutes + " PM")
+			}
+		})
+
+		// nacht positionieren
+
+		var nightPos = -(25/6)*heute.getHours()+30
+		$(".night").first().css({"left": nightPos + "%"})
+		$(".night").last().css({"left": nightPos + 100 + "%"})
+	}
+	updateTime()
+	setInterval(updateTime, 60000)
+
+
+	// news tigger
+
+	var newsListeNummer = 1
+	function updateTigger(){
+
+		$("#tigger p").first().html($("#tigger p").last().html())
+
+		$("#tigger p").last().html(newsListe[newsListeNummer%newsListe.length])
+		newsListeNummer = newsListeNummer + 1
+
+		$("#tigger p").first().css({"margin-top": 20-$("#tigger p").first().height()*0.5 + "px"}).animate({"margin-top": -$("#tigger p").first().height() + "px"})
+		$("#tigger p").last().css({"margin-top": 20-$("#tigger p").last().height()*0.5 + "px"})
+	}
+	$("#tigger p").last().html(newsListe[0])
+	updateTigger()
+	setInterval(updateTigger, 5000)
+
 
 
 
@@ -314,9 +1283,6 @@ $(document).ready(function(){
 		event.stopPropagation()
 		return false
 	};
-
-
-
 });
 
 
@@ -324,6 +1290,246 @@ $(document).ready(function(){
 
 
 
+
+
+// WERTE
+
+var heute = new Date()
+//heute = new Date(1991, 07, 28, 23, 15, 30, 0)
+var weekStart = new Date(heute.getTime() - (heute.getDay()+6)%7 * 24 * 60 * 60 * 1000)
+var productionDates = [
+	weekStart,
+	new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000),
+	new Date(weekStart.getTime() + 7 * 24 * 60 * 60 * 1000),
+	new Date(weekStart.getTime() + 13 * 24 * 60 * 60 * 1000),
+	new Date(weekStart.getTime() + 14 * 24 * 60 * 60 * 1000),
+	new Date(weekStart.getTime() + 20 * 24 * 60 * 60 * 1000),
+	new Date(weekStart.getTime() + 21 * 24 * 60 * 60 * 1000),
+	new Date(weekStart.getTime() + 27 * 24 * 60 * 60 * 1000),
+]
+
+
+var tableHeads = [
+	["PE", "PP", "Add. Powder + Y", "Add. Pellets + B", "Premix", "GF", "CaCO3"],
+	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
+	["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"],
+	["Working Hours", "Working Days", "max Availability", "Stagnation", "Workload*", "Ø Set-Up-Time*", "Defective Goods*", "Complaints*", "OEE", "RMYE"],
+	["Produktionsbestand", "Verkaufspreis", "Herstellungskosten"],
+	["Spalte 1", "Spalte 2", "Spalte 3", "Spalte 4"],
+]
+
+var tableSubHeads = [
+	[
+		[], [], [], [], [], [], [],
+	],
+	[
+		["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+	],
+	[
+		[], [], [], [], [], 
+	],
+	[
+		[], [], [], [], [], [], [], [], [], [], [], [], 
+	],
+	[
+		[], [], [], [], 
+	],
+	[
+		[], [], [], [], 
+	],
+]
+
+var productionPlan = [
+	[],
+	[1,1,0, 1,1,0, 6,2,0, 2,2,0, 2,6,0, 0,0,0, 0,0,0, 
+	3,3,0, 3,3,0, 6,1,0, 1,1,0, 6,2,0, 0,0,0, 0,0,0, 
+	2,2,0, 2,2,0, 6,3,0, 3,3,0, 6,1,0, 0,0,0, 0,0,0, 
+	1,1,0, 1,1,0, 6,3,0, 3,3,0, 7,2,0, 0,0,0, 0,0,0],
+	[2,2,0, 2,2,0, 2,6,0, 3,3,0, 3,3,0, 0,0,0, 0,0,0, 
+	3,3,0, 4,4,0, 4,6,0, 2,2,0, 2,6,0, 0,0,0, 0,0,0, 
+	3,3,0, 4,4,0, 4,6,0, 2,2,0, 2,6,0, 0,0,0, 0,0,0, 
+	3,3,0, 3,3,0, 3,3,0, 3,3,0, 4,7,0, 0,0,0, 0,0,0],
+	[],
+	[1,1,0, 1,1,0, 1,1,0, 1,1,0, 1,1,0, 0,0,0, 0,0,0,
+	8,8,0, 8,8,0, 8,8,0, 8,8,0, 8,8,0, 0,0,0, 0,0,0,
+	8,8,0, 8,8,0, 8,8,0, 8,8,0, 8,6,0, 0,0,0, 0,0,0,
+	2,2,0, 2,2,0, 2,2,0, 2,2,0, 2,2,0, 0,0,0, 0,0,0],
+	[3,3,0, 3,3,0, 3,3,0, 4,4,0, 5,6,0, 0,0,0, 0,0,0,
+	2,2,0, 2,2,0, 2,6,0, 3,3,0, 3,3,0, 0,0,0, 0,0,0,
+	3,4,0, 4,4,0, 5,6,0, 2,2,0, 6,3,0, 0,0,0, 0,0,0,
+	3,3,0, 3,3,0, 3,3,0, 4,4,0, 5,7,0, 0,0,0, 0,0,0],
+	[],
+	[1,1,1, 1,1,1, 1,1,1, 1,1,1, 1,1,1, 0,0,0, 0,0,0,
+	1,1,1, 1,1,1, 1,1,1, 1,1,1, 1,1,1, 0,0,0, 0,0,0,
+	1,1,6, 2,2,2, 2,2,2, 2,2,2, 2,2,2, 0,0,0, 0,0,0,
+	2,2,2, 2,2,2, 2,2,2, 2,2,2, 2,2,2, 0,0,0, 0,0,0],
+	[3,3,3, 3,3,3, 3,3,3, 3,3,3, 3,3,3, 0,0,0, 0,0,0,
+	3,3,3, 3,3,4, 4,4,4, 4,4,4, 4,4,4, 0,0,0, 0,0,0,
+	4,4,4, 4,4,4, 4,5,5, 5,5,5, 5,5,5, 0,0,0, 0,0,0,
+	4,4,4, 3,3,3, 3,3,3, 3,3,3, 3,3,7, 0,0,0, 0,0,0],
+	[1,1,1, 1,1,1, 1,1,6, 2,2,2, 2,2,2, 0,0,0, 0,0,0,
+	6,3,3, 3,3,3, 3,3,3, 3,3,3, 3,3,3, 0,0,0, 0,0,0,
+	6,2,2, 2,2,2, 2,2,6, 1,1,1, 1,1,1, 0,0,0, 0,0,0,
+	6,2,2, 2,2,2, 2,2,6, 3,3,3, 3,7,1, 0,0,0, 0,0,0],
+	[],
+	[2,2,2, 2,2,2, 2,2,6, 3,3,3, 3,3,3, 0,0,0, 0,0,0,
+	3,3,4, 4,4,4, 4,4,6, 1,1,1, 1,1,6, 0,0,0, 0,0,0,
+	3,3,3, 3,3,3, 3,3,6, 1,1,1, 1,1,6, 0,0,0, 0,0,0,
+	2,2,2, 2,2,2, 2,2,6, 3,3,3, 3,3,7, 0,0,0, 0,0,0],
+	[],
+	[1,1,0, 1,1,0, 1,6,0, 2,2,0, 2,2,0, 0,0,0, 0,0,0,
+	2,6,0, 1,1,0, 1,1,0, 2,2,0, 2,2,0, 0,0,0, 0,0,0,
+	2,2,0, 2,2,0, 2,2,0, 2,2,0, 2,2,0, 0,0,0, 0,0,0,
+	2,2,0, 2,2,0, 2,2,0, 2,2,0, 2,2,0, 0,0,0, 0,0,0],
+	[3,3,0, 3,3,0, 3,3,0, 3,3,0, 3,3,0, 0,0,0, 0,0,0,
+	3,3,0, 4,4,0, 4,4,0, 4,4,0, 5,5,0, 0,0,0, 0,0,0,
+	3,3,0, 3,3,0, 3,3,0, 4,4,0, 4,4,0, 0,0,0, 0,0,0,
+	5,5,0, 3,3,0, 3,3,0, 3,3,0, 7,3,0, 0,0,0, 0,0,0],
+	[1,1,0, 1,1,0, 1,6,0, 2,2,0, 2,2,0, 0,0,0, 0,0,0,
+	2,2,0, 2,2,0, 2,6,0, 3,3,0, 3,6,0, 0,0,0, 0,0,0,
+	1,1,0, 1,1,0, 6,3,0, 3,3,0, 3,6,0, 0,0,0, 0,0,0,
+	2,2,0, 2,2,0, 2,6,0, 3,3,0, 3,7,0, 0,0,0, 0,0,0],
+	[8,8,0, 8,8,0, 8,8,0, 8,8,0, 8,8,0, 0,0,0, 0,0,0,
+	8,8,0, 8,8,0, 8,8,0, 8,8,0, 8,8,0, 0,0,0, 0,0,0,
+	8,8,0, 8,8,0, 8,8,0, 8,8,0, 8,8,0, 0,0,0, 0,0,0,
+	8,8,0, 8,8,0, 8,8,0, 8,8,0, 8,8,0, 0,0,0, 0,0,0,]
+]
+
+var recipes = [
+	["Recipe 1 – Performance 2.500 kg/h", "67% PE", "3% Additives (Powder) + Yellow (Pellets)", "30% CaCO3"],
+	["Recipe 2 – Performance 2.600 kg/h ", "47% PP", "3% Premix", "50% CaCO3"],
+	["Recipe 3 – Performance 3.000 kg/h", "47% PP", "3% Additives (Pellets) + Black (Pellets)", "50% GF"],
+	["Recipe 4 – Performance 2.800 kg/h", "67% PP", "3% Additives (Pellets) + Black (Pellets)", "30% GF"],
+	["Recipe 5 – Performance 2.600 kg/h", "87% PP", "3% Additives (Pellets) + Black (Pellets)", "10% GF"],
+]
+
+var recipeValues = [
+	//PE, PP, Additive PG, Additive GS, Premix, GF, CaCO3,  >> Durchsatz
+	[1675, 0, 75, 0, 0, 0, 750, "2500 kg/h"],
+	[0, 1222, 0, 0, 780, 0, 1300, "2600 kg/h"],
+	[0, 1410, 0, 90, 0, 1500, 0, "3.000 kg/h"],
+	[0, 1876, 0, 84, 0, 840, 0, "2.800 kg/h"],
+	[0, 2262, 0, 78, 0, 260, 0, "2.600 kg/h"]
+]
+
+// stockData, finishedProductData, soldProductData sind relativ frei erfunden und richtet sich grob nach den infos auf dem plan mit dem spongebob
+var stockData = [
+	[],
+	[22500*2.1, 25000*1.9, 2000*1.9, 2000*1.8, 7500*2.1, 10000*2, 40000*2.1],
+	[],
+	[22500*2.1, 25000*1.9, 2000*2.1, 2000*1.9, 7500*2, 15000*2.1, 40000*1.8],
+	[],
+	[22500*4.1, 25000*3.9, 2000*2.9, 2000*2.9, 7500*3.1, 15000*3.1, 40000*3.1],
+	[],
+	[22500*0.9, 35000*1.1, 2000*1.1, 2000*1.1, 20000*1.1, 20000*0.9, 40000*1.1],
+	[],
+	[22500*4.1, 25000*3.9, 2000*4, 2000*4, 7500*4.1, 7500*4.1, 40000*4],
+]
+
+var finishedProductData = [
+	[],
+	[4*2500*8, 4*2600*8, 0, 0, 0],
+	[],
+	[3*2500*8, 0, 2*3000*8, 2*2800*8, 1*2600*8],
+	[],
+	[12*2500*8, 0, 6*3000*8, 0, 0],
+	[],
+	[0, 6*2600*8, 0, 0, 0],
+	[],
+	[10*2500*8, 0, 6*3000*8, 0, 0],
+]
+
+var soldProductData = [
+	[],
+	[3.5*2500*8, 3*2600*8, 0, 0, 0],
+	[],
+	[2*2500*8, 0, 0*3000*8, 2*2800*8, 0.8*2600*8],
+	[],
+	[10*2500*8, 0, 6*3000*8, 0, 0],
+	[],
+	[0, 4*2600*8, 0, 0, 0],
+	[],
+	[8*2500*8, 0, 6*3000*8, 0, 0],
+]
+
+var efficiencyVal =[
+	["16&thinsp;h", "251&thinsp;h", "4016&thinsp;h/y", "38,<comma>47</comma>&thinsp;h/m", "90%", "6,<comma>3</comma>&thinsp;h", "2,<comma>2</comma>%", 3, "84%", "98,<comma>00</comma>%"],
+	["16&thinsp;h", "251&thinsp;h", "4016&thinsp;h/y", "48,<comma>16</comma>&thinsp;h/m", "88%", "3,<comma>16</comma>&thinsp;h", "4,<comma>8</comma>%", 1, "80%", "96,<comma>50</comma>%"],
+	[],
+	["16&thinsp;h", "252&thinsp;h", "4032&thinsp;h/y", "57,<comma>70</comma>&thinsp;h/m", "85%", "5,<comma>8</comma>&thinsp;h", "7%", 0, "75%", "94,<comma>20</comma>%"],
+	["16&thinsp;h", "252&thinsp;h", "4032&thinsp;h/y", "110,<comma>80</comma>&thinsp;h/m", "70%", "8&thinsp;h", "6,<comma>8</comma>%", 2, "62%", "95,<comma>40</comma>%"],
+	[],
+	["24&thinsp;h", "249&thinsp;h", "5976&thinsp;h/y", "41,<comma>34</comma>&thinsp;h/m", "92%", "2,<comma>2</comma>&thinsp;h", "1,<comma>9</comma>%", 0, "86%", "98,<comma>20</comma>%"],
+	["24&thinsp;h", "249&thinsp;h", "5976&thinsp;h/y", "36,<comma>68</comma>&thinsp;h/m", "94%", "1,<comma>6</comma>&thinsp;h", "2,<comma>4</comma>%", 4, "87%", "97,<comma>60</comma>%"],
+	["24&thinsp;h", "249&thinsp;h", "5976&thinsp;h/y", "66,<comma>74</comma>&thinsp;h/m", "87%", "7,<comma>5</comma>&thinsp;h", "2%", 1, "81%", "97,<comma>95</comma>%"],
+	[],
+	["24&thinsp;h", "250&thinsp;h", "6000&thinsp;h/y", "48,<comma>90</comma>&thinsp;h/m", "91%", "3,<comma>8</comma>&thinsp;h", "3,<comma>4</comma>%", 0, "84%", "93,<comma>60</comma>%"],
+	[],
+	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "28,<comma>70</comma>&thinsp;h/m", "94%", "2,<comma>4</comma>&thinsp;h", "8,<comma>2</comma>%", 2, "82%", "89,<comma>25</comma>%"],
+	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "45,<comma>33</comma>&thinsp;h/m", "87%", "5,<comma>6</comma>&thinsp;h", "2,<comma>5</comma>%", 5, "81%", "91,<comma>15</comma>%"],
+	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "155,<comma>33</comma>&thinsp;h/m", "60%", "6,<comma>5</comma>&thinsp;h", "4,<comma>7</comma>%", 1, "54%", "78,<comma>60</comma>%"],
+	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "202,<comma>67</comma>&thinsp;h/m", "50%", "10,<comma>2</comma>&thinsp;h", "1,<comma>2</comma>%", 2, "47%", "77,<comma>90</comma>%"],
+]
+
+var productionNeedDay = [
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+]
+
+var productionNeedTwoDays = [
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+]
+
+var productionNeedWeek = [
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+	[0,0,0,0,0,0,0],
+]
 
 
 
