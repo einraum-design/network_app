@@ -203,23 +203,44 @@ $(document).ready(function(){
 	function switchTableGraph(){
 		if (graphView == true){
 			graphView = false
-			$("#graphImg").hide()
+			$(".graphImg").hide()
 			$("#btns4").children("p:first").children("img").attr({"src": "img/radio_on.png"})
 			$("#btns4").children("p:last").children("img").attr({"src": "img/radio_off.png"})
 			$("#infoNames").show().siblings("p").show()
 			$("#valTab").show()
+			$("#graphBtns").hide()
+			$("#graphBtns").children("p").removeClass("active").hide()
+			$("#graphBtns").children("p:first").addClass("active")
 
 		} else {
+			$(".mapInfo").eq(infoNumber).children(".information").children("li").each(function(i,v){
+				$("#graphBtns").children("p").eq(i).show()
+				$(".graphImg").eq(i+1).attr({"src": "img/g_" + infoNumber + "_" + i + ".png"})
+			})
 			graphView = true
-			$("#graphImg").show()
+			$(".graphImg:eq(0)").show()
+			$(".graphImg:eq(1)").show()
 			$("#btns4").children("p:first").children("img").attr({"src": "img/radio_off.png"})
 			$("#btns4").children("p:last").children("img").attr({"src": "img/radio_on.png"})
 			$("#infoNames").hide().siblings("p").hide()
 			$("#valTab").hide()
-
+			$("#graphBtns").show()
 		}
 	}
 	$("#btns4").children("p").on("click", switchTableGraph)
+
+	function toggleLineGraph(){
+		var number = $(this).index()
+		console.log(number)
+		if ($(this).hasClass("active")){
+			$(this).removeClass("active")
+			$(".graphImg:eq(" + (number+1) + ")").hide()
+		} else {
+			$(this).addClass("active")
+			$(".graphImg:eq(" + (number+1) + ")").show()
+		}
+	}
+	$("#graphBtns").children("p").on("click", toggleLineGraph)
 
 	// nummer hinter komma klein schreiben
 	function makeNumberSexy(number){
@@ -267,7 +288,7 @@ $(document).ready(function(){
 
 			// im popup informationen anpassen
 			$("#popup h2").html($(this).children("h2").html() + " <time>" + $(this).children("h3").html() + "</time>")
-			$("#graphImg").attr({"src": "img/graph_" + infoNumber + ".png"})
+			//$("#graphImg").attr({"src": "img/graph_" + infoNumber + ".png"})
 	
 			// auf produktions-tab resetten
 			$("#popup h3").removeClass("activebtn")
