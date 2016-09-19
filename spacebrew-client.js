@@ -18,6 +18,8 @@ $( document ).ready( function () {
 	var deviceName = 'tablet-app-' + deviceId;
 	var appName = 'network';
 
+	var isMaster = getQueryString( 'master' ) === 'true';
+
 	function initSpacebrew ( config ) {
 		console.log( 'spacebrew', config );
 		spaceBrewClient = new Spacebrew.Client( {
@@ -57,6 +59,7 @@ $( document ).ready( function () {
 			var data = { };
 			data.deviceId = deviceId;
 			data.appName = appName;
+			data.isMaster = isMaster;
 			
 			if ( typeof value !== 'undefined' ) {
 				data.value = value;
