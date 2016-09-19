@@ -25,11 +25,11 @@ $(document).ready(function(){
 	var todayTabNumber = 0
 	var onInfoPage = 0
 
-	var newsListe = ["Alter Falter, geile Anlage <b>@coperion</b>",
-		"hdf <b>#coperion</b> euer stand ist so awesome",
-		"<b>#coperion</b> ich werde meine drei Erstgeborenen nach euch benennen.",
-		"Doperion <b>@coperion</b>",
-		"I can’t <b>#coperion</b> with dat awesumness",
+	var newsListe = ["Schöne Anlage, <b>@coperion</b>",
+		"hdf <b>#coperion</b> euer stand ist so klasse",
+		// "<b>#coperion</b> ich werde meine drei Erstgeborenen nach euch benennen.",
+		// "Doperion <b>@coperion</b>",
+		// "I can’t <b>#coperion</b> with dat awesumness",
 		"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>"
 	]
 
@@ -268,7 +268,7 @@ $(document).ready(function(){
 					plantName: $(this).find( 'h2' ).text(),
 					plantId: $(this).attr( 'data-plant-id' )
 				} );
-			}			
+			}
 
 			// map an neue Stelle schieben
 			$("#mapDiv #map").stop(true).animate({"width": "200%", "margin-left": marginX+"px", "margin-top": marginY+"px", "opacity": 1}, duration = 700)

@@ -9,6 +9,7 @@ $( document ).ready( function () {
 		.then( initSpacebrew );
 
 	var isConnected = false;
+	var isConnecting = false;
 
 	var deviceInQueryStr = getQueryString( 'deviceId' ) || '';
 	var deviceId = ( deviceInQueryStr.length && deviceInQueryStr !== 'undefined' )
@@ -29,10 +30,25 @@ $( document ).ready( function () {
 		spaceBrewClient.addPublish( 'appClosed', 'string' );
 		spaceBrewClient.addPublish( 'plantActivated', 'string' );
 		spaceBrewClient.addPublish( 'plantDeactivated', 'string' );
+		
+		isConnecting = true;
 		spaceBrewClient.connect();
+		
 		spaceBrewClient.onOpen = function () {
 			isConnected = true;
+			isConnecting = false;
 			console.log( 'CONNECTED' );
+		};
+
+		spaceBrewClient.onError = function ( err ) {
+			isConnecting = false;
+			// isConnected = false;
+		};
+
+		spaceBrewClient.onClose = function () {
+			isConnecting = false;
+			isConnected = false;
+			console.log( 'DISCONNECTED' );
 		};
 	}
 
@@ -51,6 +67,21 @@ $( document ).ready( function () {
 		} else {
 			console.log( 'could not send because spacebrew is not connected', type, value );
 		}
+	}
+
+	if ( Visibility ) {
+		Visibility.change( function ( event, state ) {
+			if ( 'visible' !== Visibility.state() ) {
+				if ( isConnected && ! isConnecting ) {
+					spaceBrewClient.close();
+				}
+			} else {
+				if ( ! isConnected && ! isConnecting ) {
+					isConnecting = true;
+					spaceBrewClient.connect();
+				}
+			}
+		});
 	}
 
 	window.sendSpacebrewMessage = sendMessage;
