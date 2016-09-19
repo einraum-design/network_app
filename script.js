@@ -262,7 +262,13 @@ $(document).ready(function(){
 			var marginY = _H/2-2*y-2*mapMarginDefault
 			infoNumber = $(this).index(".mapInfo")
 
-			console.log( 'HELLO', infoNumber );
+			if ( window.sendSpacebrewMessage ) {
+				window.sendSpacebrewMessage( 'plantActivated', {
+					plantIndex: parseInt( infoNumber, 10 ),
+					plantName: $(this).find( 'h2' ).text(),
+					plantId: $(this).attr( 'data-plant-id' )
+				} );
+			}			
 
 			// map an neue Stelle schieben
 			$("#mapDiv #map").stop(true).animate({"width": "200%", "margin-left": marginX+"px", "margin-top": marginY+"px", "opacity": 1}, duration = 700)
@@ -1247,7 +1253,13 @@ $(document).ready(function(){
 
 	// exit app
 	$("#exitBtn").on("click", function(){
-		window.close()
+		if ( window.sendSpacebrewMessage ) {
+			window.sendSpacebrewMessage( 'appCloses' );
+		}
+
+		setTimeout( function () {
+			window.close();
+		}, 150 );
 	})
 
 
@@ -1306,6 +1318,10 @@ $(document).ready(function(){
 		event.stopPropagation()
 		return false
 	};
+
+	if ( window.sendSpacebrewMessage ) {
+		window.sendSpacebrewMessage( 'appOpened' );
+	}
 });
 
 
