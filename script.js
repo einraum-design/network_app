@@ -262,6 +262,8 @@ $(document).ready(function(){
 			var marginY = _H/2-2*y-2*mapMarginDefault
 			infoNumber = $(this).index(".mapInfo")
 
+			console.log( 'HELLO', infoNumber );
+
 			// map an neue Stelle schieben
 			$("#mapDiv #map").stop(true).animate({"width": "200%", "margin-left": marginX+"px", "margin-top": marginY+"px", "opacity": 1}, duration = 700)
 			$(".night").delay(100).animate({"opacity": 0})
