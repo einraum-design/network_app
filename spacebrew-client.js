@@ -11,7 +11,11 @@ $( document ).ready( function () {
 	var isConnected = false;
 	var isConnecting = false;
 
-	var deviceInQueryStr = getQueryString( 'deviceId' ) || '';
+	var deviceInQueryStr = getQueryString( 'deviceId' ) ||
+		getQueryString( 'deviceid' ) ||
+		getQueryString( 'device' ) ||
+		getQueryString( 'id' ) ||
+		'';
 	var deviceId = ( deviceInQueryStr.length && deviceInQueryStr !== 'undefined' )
 		? parseInt( deviceInQueryStr, 10 )
 		: ~~( Math.random() * 69 );
@@ -32,6 +36,7 @@ $( document ).ready( function () {
 		spaceBrewClient.addPublish( 'appClosed', 'string' );
 		spaceBrewClient.addPublish( 'plantActivated', 'string' );
 		spaceBrewClient.addPublish( 'plantDeactivated', 'string' );
+		spaceBrewClient.addPublish( 'appConnected', 'string' );
 		
 		isConnecting = true;
 		spaceBrewClient.connect();
@@ -39,7 +44,8 @@ $( document ).ready( function () {
 		spaceBrewClient.onOpen = function () {
 			isConnected = true;
 			isConnecting = false;
-			console.log( 'CONNECTED' );
+			
+			sendMessage( 'appConnected' );
 		};
 
 		spaceBrewClient.onError = function ( err ) {
@@ -50,7 +56,6 @@ $( document ).ready( function () {
 		spaceBrewClient.onClose = function () {
 			isConnecting = false;
 			isConnected = false;
-			console.log( 'DISCONNECTED' );
 		};
 	}
 
