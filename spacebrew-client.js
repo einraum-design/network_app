@@ -45,7 +45,9 @@ $( document ).ready( function () {
 			isConnected = true;
 			isConnecting = false;
 			
-			sendMessage( 'appConnected' );
+			setInterval( function () {
+				sendMessage( 'appConnected' );
+			}, 1000 );
 		};
 
 		spaceBrewClient.onError = function ( err ) {
