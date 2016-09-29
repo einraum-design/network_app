@@ -34,7 +34,7 @@ $(document).ready(function(){
 	]
 
 	var tage = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-	var monate = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+	var monate = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 	//var materialListe = ["Stickstoff", "Kindertränen", "Diamant", "Knete", "Milka", "Müllermilch", "Atommüll", "Sternenstaub", "Rinderfilet", "Argon", "Süßstoff"]
 	var thstndrd = "th"
 	if (heute.getDate() == 1 || heute.getDate() == 11 || heute.getDate() == 21 || heute.getDate() == 31) {
@@ -44,9 +44,12 @@ $(document).ready(function(){
 	} else if (heute.getDate() == 3 || heute.getDate() == 13 || heute.getDate() == 23) {
 		thstndrd = "rd"
 	} 
-	$("#header h2").html(tage[heute.getDay()] + ", " + monate[heute.getMonth()] + " " + heute.getDate() + thstndrd)
+	$("#header h2").html(tage[heute.getDay()] + " " + monate[heute.getMonth()] + " " + heute.getDate())
 
 	function loadHome(){
+
+		$("body").removeClass("hideNav");
+		$("#mapDiv").removeClass("blur blurwhite");
 
 		console.log("go home");
 		onInfoPage = 0
@@ -112,8 +115,8 @@ $(document).ready(function(){
 			if (dayView == true) {
 				dayView = false
 				if (noneListPopup == 1) {
-					$("#btns2").children("li:first").children("img").attr({"src": "img/radio_off.png"})
-					$("#btns2").children("li:last").children("img").attr({"src": "img/radio_on.png"})
+					$("#btns2").children("li:first").removeClass("active")
+					$("#btns2").children("li:last").addClass("active")
 				} else {
 					$("#btns3").children("p:last").children("img").attr({"src": "img/radio_off.png"})
 					$("#btns3").children("p:first").children("img").attr({"src": "img/radio_on.png"})
@@ -122,8 +125,8 @@ $(document).ready(function(){
 			} else {
 				dayView = true
 				if (noneListPopup == 1) {
-					$("#btns2").children("li:first").children("img").attr({"src": "img/radio_on.png"})
-					$("#btns2").children("li:last").children("img").attr({"src": "img/radio_off.png"})
+					$("#btns2").children("li:first").addClass("active")
+					$("#btns2").children("li:last").removeClass("active")
 				} else {
 					$("#btns3").children("p:last").children("img").attr({"src": "img/radio_on.png"})
 					$("#btns3").children("p:first").children("img").attr({"src": "img/radio_off.png"})
@@ -180,7 +183,7 @@ $(document).ready(function(){
 						}
 
 						$(this).children(".empty").children(".full").children(".used").animate({"width": (needed/10)/stock+"%"}, duration = duration, "easeInOutQuart")
-						$(this).children(".empty").children(".full").children(".used.bgRed").css({"background-color": "#a3bacf"})
+						$(this).children(".empty").children(".full").children(".used.bgRed").removeClass("active")
 						$(this).children(".empty").children(".full").children(".used.bgRed").parent().siblings(".emptyNumber").animate({"margin-left": -delta+"px"}, duration = duration)
 					} else {
 						var duration = needed/stock
@@ -189,7 +192,7 @@ $(document).ready(function(){
 						}
 
 						$(this).children(".empty").children(".full").children(".used").animate({"width": (needed/10)/stock+"%"}, duration = duration, "easeInOutQuart")
-						$(this).children(".empty").children(".full").children(".used.bgRed").css({"background-color": "#cfa3a3"})
+						$(this).children(".empty").children(".full").children(".used.bgRed").addClass("active")
 						$(this).children(".empty").children(".full").children(".used.bgRed").parent().siblings(".emptyNumber").delay(duration-900).animate({"margin-left": "0px"})
 					}
 				}
@@ -247,13 +250,18 @@ $(document).ready(function(){
 		var beforeComma = Math.floor(number)
 		var afterComma = parseInt((number - beforeComma)*10)
 
-		return (beforeComma + ",<comma>" + afterComma + "</comma>")
+		return (beforeComma + ".<comma>" + afterComma + "</comma>")
 	}
 
 
 	// click on information
 	function clickInfo(){
+
+
 		if ($(this).css("opacity") > 0.9 && $("#warningPopup").css("opacity") < 0.1){
+
+			$("#mapDiv").addClass("blur blurwhite");
+			$("body").addClass("hideNav");
 			//console.log($(this).attr("data-infoId"))
 
 			var x = parseFloat($(this).attr("data-x"))
@@ -301,7 +309,7 @@ $(document).ready(function(){
 			// auf produktions-tab resetten
 			$("#popup h3").removeClass("activebtn")
 			$("#popup .preselected").addClass("activebtn")
-			$("#popup .preselected").siblings().css({"background-color": "white"})
+			$("#popup .preselected").siblings().css({"background-color": "#e8ebef"})
 			// soundso viele tabs für die linien machen
 			$("#valTab").children().remove()
 			$(".scrollableY2").children().remove()
@@ -347,13 +355,8 @@ $(document).ready(function(){
 	// click on toggle
 	function toggleViews(){
 		console.log("toggle:" + $(this).index())
-		$("#tableTabs h4").css({"background-color": "#568"})
+		// $("#tableTabs h4").css({"background-color": "#568"})
 
-		if ($(this).index() == 0){
-			if (showingTable == false ){
-				$("#btns2").animate({"opacity": 1})
-			}
-		}
 
 		if ($(this).index() == 4){
 			showWarningCoperion()
@@ -361,34 +364,96 @@ $(document).ready(function(){
 		} else {
 			hideExtended()
 
+			// console.log($(this).index())
+
 			//if ($(this).attr("src") == "img/list_filled_fafafa.png"){
 			if (showingTable == false){
+
+				if ($(this).index() == 0){
+					$("#btns2").animate({"opacity": 1})
+				}
+
+				$("#mapDiv").addClass("blur");
+
+				$(this).addClass("active");
+
 				showingTable = true
 				buildTable($(this).index())
-				$(this).siblings().animate({"bottom": "-40px"})
+				// $(this).siblings().animate({"bottom": "-40px"})
 				$("#closeBtn2").animate({"opacity": 0.3})
 				$("#techLegend").animate({"opacity": 1})
 				dayView = false
-				$("#btns2").children("li:first").children("img").attr({"src": "img/radio_off.png"})
-				$("#btns2").children("li:last").children("img").attr({"src": "img/radio_on.png"})
+				$("#btns2").children("li:first").removeClass("active")
+				$("#btns2").children("li:last").addClass("active")
 
 				//$(this).attr({"src": "img/world_filled_blau.png"})
 				//$("#toggleText").html("Karte")
 				$("#technical").stop(true).css({"pointer-events": "auto", "margin-top": "780 px", "display": "block"}).animate({"margin-top" : "75px"}, 400)
-			} else {
-				//$(this).attr({"src": "img/list_filled_fafafa.png"})
-				//$("#toggleText").html("Liste")
-				showingTable = false
-				$("#tableTabs h4").animate({"bottom": "0px"})
-				$("#closeBtn2").animate({"opacity":0})
-				$("#techLegend").animate({"opacity":0})
-				$("#btns2").animate({"opacity": 0})
 
-				$("body").css({"overflow": "hidden"})
-				$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
-					$(this).css({"pointer-events": "none", "display": "none"})
-					$("body").css({"overflow": "visible"})
-				})
+			} else {
+		
+				if ($(this).is( ".active" ) == false && $(this).attr("id") != "closeBtn2") {
+
+					$("#tableTabs h4.active").removeClass("active");
+
+					//$(this).attr({"src": "img/list_filled_fafafa.png"})
+					//$("#toggleText").html("Liste")
+					showingTable = false
+					// $("#tableTabs h4").animate({"bottom": "0px"})
+					$("#closeBtn2").animate({"opacity":0})
+					$("#techLegend").animate({"opacity":0})
+					$("#btns2").animate({"opacity": 0})
+
+					$("body").css({"overflow": "hidden"})
+					$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
+						$(this).css({"pointer-events": "none", "display": "none"})
+						$("body").css({"overflow": "visible"})
+					})
+
+					// Open New
+					$(this).addClass("active");
+
+					if ($(this).index() == 0){
+						$("#btns2").animate({"opacity": 1})
+					}
+
+					showingTable = true
+					buildTable($(this).index())
+					// $(this).siblings().animate({"bottom": "-40px"})
+					$("#closeBtn2").animate({"opacity": 0.3})
+					$("#techLegend").animate({"opacity": 1})
+					dayView = false
+					$("#btns2").children("li:first").children("img").attr({"src": "img/radio_off.png"})
+					$("#btns2").children("li:last").children("img").attr({"src": "img/radio_on.png"})
+
+					//$(this).attr({"src": "img/world_filled_blau.png"})
+					//$("#toggleText").html("Karte")
+					$("#technical").stop(true).css({"pointer-events": "auto", "margin-top": "780 px", "display": "block"}).animate({"margin-top" : "75px"}, 400)
+
+				} else {
+
+					$("#mapDiv").removeClass("blur");
+
+					$("#tableTabs h4.active").removeClass("active");
+
+					//$(this).attr({"src": "img/list_filled_fafafa.png"})
+					//$("#toggleText").html("Liste")
+					showingTable = false
+					// $("#tableTabs h4").animate({"bottom": "0px"})
+					$("#closeBtn2").animate({"opacity":0})
+					$("#techLegend").animate({"opacity":0})
+					$("#btns2").animate({"opacity": 0})
+
+					$("body").css({"overflow": "hidden"})
+					$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
+						$(this).css({"pointer-events": "none", "display": "none"})
+						$("body").css({"overflow": "visible"})
+					})
+
+				}
+
+
+
 			}
 		}
 	}
@@ -399,12 +464,14 @@ $(document).ready(function(){
 	})
 	$("#closeBtn2").on("click", function(){
 		$(this).css({"opacity": 0.3})
+		$("#mapDiv").removeClass("blur");
 		toggleViews()
 	})
 
 	// table tabs
 	$("#tableTabs h4").on("touchstart", function(){
-		$(this).css({"background-color": "#457"})
+		// $(this).css({"background-color": "#457"})
+	
 	})
 	$("#tableTabs h4").on("touchend", toggleViews)
 
@@ -426,6 +493,12 @@ $(document).ready(function(){
 				}
 
 				$(".productionPlanColumn").last().children("ul").last().children(".tabHeading").html(tableSubHeads[1][i][k])
+				if (subHeadsCurrent[i][k] != "") {
+					$(".productionPlanColumn").last().children("ul").last().children(".tabHeading").parent().addClass("current");
+				} else {
+					$(".productionPlanColumn").last().children("ul").last().children(".tabHeading").parent().removeClass("current");
+				}
+				
 			}
 		}
 		$(".productionPlanColumn").insertAfter($(".productionPlanColumn:first"))
@@ -682,7 +755,7 @@ $(document).ready(function(){
 			var w1 = scaleFactor*100
 			var w2 = 100*needed/stock
 
-			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy(stock/1000) + "&thinsp;t").siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000))
+			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy(stock/1000) ).siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000))
 
 			if (stock < needed){
 
@@ -694,7 +767,7 @@ $(document).ready(function(){
 					w2 = w2*w1*0.01
 				}
 				var delta = w2 - w1
-				element.children(".empty").children(".full").css({"margin-right": 0}).animate({"margin-right": delta + "px"}, {duration: duration, queue: false}).children(".used").addClass("bgRed")
+				element.children(".empty").children(".full").css({"margin-right": 0}).animate({"margin-right": delta + "px"}, {duration: duration, queue: false}).children(".used").addClass("bgRed active")
 			}
 		}
 	}
@@ -749,6 +822,8 @@ $(document).ready(function(){
 
 	// VERSCHIEDENE TABELLEN LADEN
 	function buildTable(number){
+
+		$("#technical").attr("data-tech",number);
 
 		console.log("prepare "+number)
 		isAtPage = number
@@ -1181,7 +1256,11 @@ $(document).ready(function(){
 					$(this).css({"background-color":"#f6f6f6"})
 				} else {
 					$(this).css({"background-color":"#e3e3e3"})
+					$(this).addClass("contentline");
 				}
+			}
+			if ($(this).html() == " <br> ") {
+				$(this).addClass("contentline-empty")
 			}
 		})
 	})
@@ -1206,6 +1285,9 @@ $(document).ready(function(){
 			if ($(this).parent().width() < 32){
 				toWidth = $(this).parent().data("originalWidth")
 				toOpacity = 1
+				$(this).removeClass("collapsed")
+			} else {
+				$(this).addClass("collapsed")
 			}
 			$(this).parent().stop().animate({"width": toWidth+ "px"}, duration = 500)
 			$(this).siblings().stop().animate({"opacity": toOpacity}, duration = 500)
@@ -1245,6 +1327,7 @@ $(document).ready(function(){
 		e.stopPropagation();
 		$(this).css({"background-color": "#6f7070"})
 		$("#warningPopup").animate({"zoom": "90%", "opacity": 0}).css({"pointer-events": "none"})
+		$("#tableTabs h4.active").removeClass("active");
 		if ($(this).index(".answer") == 1){
 			//window.location.href = "https://mycoperion.coperion.com"
 		}
@@ -1302,8 +1385,8 @@ $(document).ready(function(){
 		$("#tigger p").last().html(newsListe[newsListeNummer%newsListe.length])
 		newsListeNummer = newsListeNummer + 1
 
-		$("#tigger p").first().css({"margin-top": 20-$("#tigger p").first().height()*0.5 + "px"}).animate({"margin-top": -$("#tigger p").first().height() + "px"})
-		$("#tigger p").last().css({"margin-top": 20-$("#tigger p").last().height()*0.5 + "px"})
+		$("#tigger p").first().css({"margin-top": 29-$("#tigger p").first().height()*0.5 + "px"}).animate({"margin-top": -$("#tigger p").first().height() + "px"})
+		$("#tigger p").last().css({"margin-top": 29-$("#tigger p").last().height()*0.5 + "px"})
 	}
 	$("#tigger p").last().html(newsListe[0])
 	updateTigger()
@@ -1326,11 +1409,6 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-
 // WERTE
 
 var heute = new Date()
@@ -1348,6 +1426,23 @@ var productionDates = [
 ]
 
 
+var days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+var daySubHeads = new Array();
+var subHeadsCurrent = new Array();
+for (var f = 0; f < 4; f++) {
+	daySubHeads[f] = new Array();	
+	subHeadsCurrent[f] = new Array();	
+	for (var n = 0; n < 7; n++) {
+		daySubHeads[f][n] = days[n] + " " + new Date(productionDates[f].getTime() + (n*86400000)).getDate();
+		if (new Date().toDateString() == new Date(productionDates[f].getTime() + (n*86400000)).toDateString()) {
+			subHeadsCurrent[f][n] = "current";
+		} else {
+			subHeadsCurrent[f][n] = "";
+		}
+	};
+};
+
+
 var tableHeads = [
 	["PE", "PP", "Add. Powder + Y", "Add. Pellets + B", "Premix", "GF", "CaCO3"],
 	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
@@ -1357,12 +1452,15 @@ var tableHeads = [
 	["Spalte 1", "Spalte 2", "Spalte 3", "Spalte 4"],
 ]
 
+
+
+
 var tableSubHeads = [
 	[
 		[], [], [], [], [], [], [],
 	],
 	[
-		["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+		[]
 	],
 	[
 		[], [], [], [], [], 
@@ -1377,6 +1475,8 @@ var tableSubHeads = [
 		[], [], [], [], 
 	],
 ]
+
+tableSubHeads[1] = daySubHeads;
 
 var productionPlan = [
 	[],
