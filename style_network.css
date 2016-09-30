@@ -1250,3 +1250,22 @@ ul#btns2 {
 .night {
 	display: none;
 }
+
+#marketing-sales {
+	z-index: 2;
+	position: absolute;
+	left: 0;
+	top: 75px;
+	width: 100%;
+	height: calc(100% - 125px);
+	background-color: #fff;
+	background-image: url(img/marketing-sales.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	display: none;
+}
+
+#marketing-sales.is-active {
+	display: block;
+}

@@ -1293,7 +1293,9 @@ $(document).ready(function(){
 			$(this).siblings().stop().animate({"opacity": toOpacity}, duration = 500)
 		}
 	}
+
 	$(document).on("click", "#technical h4", toggleTechTab)
+	
 
 
 	// Warning popup
@@ -1310,7 +1312,8 @@ $(document).ready(function(){
 	// 	}
 	// }
 	function showWarningCoperion(){
-		$("#warningPopup").animate({"zoom": "100%", "opacity": 1}, duration = 350, "easeOutBack").css({"pointer-events": "auto"})
+		showMarketingAndSales();
+		// $("#warningPopup").animate({"zoom": "100%", "opacity": 1}, duration = 350, "easeOutBack").css({"pointer-events": "auto"})
 	}
 
 	setInterval(function(){
@@ -1407,7 +1410,28 @@ $(document).ready(function(){
 	}
 });
 
+// function toggleMarketingAndSales () {
+// 	$('#marketing-sales').toggleClass( 'is-active' );
+// }
 
+$( '#marketing-sales' ).on( 'click', hideMarketingAndSales );
+
+var ms_timeout;
+
+function showMarketingAndSales () {
+	clearTimeout( ms_timeout );
+
+	ms_timeout = setTimeout( function () {
+		$('#marketing-sales').addClass( 'is-active' );
+	}, 100 );
+
+}
+
+function hideMarketingAndSales () {
+	ms_timeout = setTimeout( function () {
+		$('#marketing-sales').removeClass( 'is-active' );
+	}, 100 );
+}
 
 // WERTE
 
