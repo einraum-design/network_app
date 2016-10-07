@@ -769,6 +769,10 @@ $(document).ready(function(){
 				var delta = w2 - w1
 				element.children(".empty").children(".full").css({"margin-right": 0}).animate({"margin-right": delta + "px"}, {duration: duration, queue: false}).children(".used").addClass("bgRed active")
 			}
+			element.removeClass("notNeeded");
+		} else {
+			element.addClass("notNeeded");
+			element.html("")
 		}
 	}
 
@@ -817,6 +821,10 @@ $(document).ready(function(){
 				var delta = w2 - w1
 				element.children(".empty").children(".full").css({"margin-right": 0}).animate({"margin-right": delta + "px"}, {duration: duration, queue: false}).children(".used").addClass("bgRed")
 			}
+			element.removeClass("notNeeded");
+		} else {
+			element.addClass("notNeeded");
+			element.html("")
 		}
 	}
 
@@ -869,9 +877,9 @@ $(document).ready(function(){
 				}
 			}
 			if (number == 1){
-				$("#techLegend").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'> ▮</abc>stock")
+				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
 			} else {
-				$("#techLegend").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>sold <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'> ▮</abc>stock")
+				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
 			}
 			
 		} else if (number != 1) {
@@ -939,7 +947,7 @@ $(document).ready(function(){
 			})
 			$("#extraLine").hide()
 
-			$("#techLegend").html("<abc style = 'color: #29cc29; font-size: 14pt'> ▮</abc>production <abc style = 'color: #ffca00; font-size: 14pt; margin-left: 20px'> ▮</abc>set-up <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'> ▮</abc>maintenance")
+			$("#techLegend").html("<abc style = 'color: #29cc29; font-size: 14pt'></abc>production <abc style = 'color: #ffca00; font-size: 14pt; margin-left: 20px'></abc>set-up <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'></abc>maintenance")
 
 		} else if (number == 2){
 			// finished products
@@ -1037,8 +1045,8 @@ $(document).ready(function(){
 				loadMaterialBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>planned")
-			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'> ▮</abc>stock")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>planned")
+			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>stock")
 			$("#btns3").show()
 
 		} else if (number == 5){
@@ -1095,8 +1103,8 @@ $(document).ready(function(){
 				loadProductBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'> ▮</abc>sold")
-			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'> ▮</abc>stock")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold")
+			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>stock")
 			$("#btns3").hide()
 
 		} else if (number == 7){
@@ -1433,6 +1441,62 @@ function hideMarketingAndSales () {
 	}, 100 );
 }
 
+
+var news = {
+
+	data: "",
+
+	init: function() {
+
+		// hiddenEvents.loadData();
+		// $(".hiddenEvents .hiddenMaintenance").on('click', function() {
+		// 	hiddenEvents.maintenance();
+		// });
+
+		// $(".hiddenEvents .hiddenError").on('click', function() {
+		// 	hiddenEvents.error();
+		// });
+
+		// $(".hiddenError-Forwarding .knob").removeClass("loaded");
+
+	},
+
+	loadData: function() {
+
+		// $.get("http://www.plasticstoday.com/rss.xml").done(function (data) {
+		//     news.data = data;
+		// 	console.log(news.data);
+		// });
+
+
+		$.ajax({
+		    xhrFields: {
+		        withCredentials: true
+		    },
+		    type: "GET",
+		    url: "https://www.kunststoffe.de/en/news/overview/rss"
+		}).done(function (data) {
+		    console.log(data);
+		});
+
+		// $.ajax({
+		// 	dataType: "xml",
+		// 	crossDomain: true,
+		// 	beforeSend: setHeader,
+		// 	url : "http://www.plasticstoday.com/rss.xml",
+		// 	success : function (data) {
+		// 			news.data = data;
+		// 			console.log(news.data);
+		// 			// console.log(hiddenEvents.data);
+		// 	}
+		// });
+
+	}
+
+}
+
+news.loadData();
+
 // WERTE
 
 var heute = new Date()
@@ -1693,7 +1757,6 @@ var productionNeedWeek = [
 	[0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0],
 ]
-
 
 
 
