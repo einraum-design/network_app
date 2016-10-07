@@ -354,14 +354,76 @@ $(document).ready(function(){
 
 	// click on toggle
 	function toggleViews(){
-		console.log("toggle:" + $(this).index())
-		// $("#tableTabs h4").css({"background-color": "#568"})
-
 
 		if ($(this).index() == 4){
-			showWarningCoperion()
+
+			if (showingTable == false){ 
+
+				$("#mapDiv").removeClass("blur");
+				$("#tableTabs h4.active").removeClass("active");
+
+				//$(this).attr({"src": "img/list_filled_fafafa.png"})
+				//$("#toggleText").html("Liste")
+				showingTable = false
+				// $("#tableTabs h4").animate({"bottom": "0px"})
+				$("#closeBtn2").animate({"opacity":0})
+				$("#techLegend").animate({"opacity":0})
+				$("#btns2").animate({"opacity": 0})
+
+				$("body").css({"overflow": "hidden"})
+				$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
+					$(this).css({"pointer-events": "none", "display": "none"})
+					$("body").css({"overflow": "visible"})
+				})
+
+				$(this).addClass("active");
+				showingTable = true
+
+				showWarningCoperion()
+
+			} else {
+
+				if ($(this).is( ".active" ) == false) {
+
+					$("#mapDiv").removeClass("blur");
+					$("#tableTabs h4.active").removeClass("active");
+					showingTable = false
+					$("#closeBtn2").animate({"opacity":0})
+					$("#techLegend").animate({"opacity":0})
+					$("#btns2").animate({"opacity": 0})
+
+					$("body").css({"overflow": "hidden"})
+					$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
+						$(this).css({"pointer-events": "none", "display": "none"})
+						$("body").css({"overflow": "visible"})
+					})
+
+					// Open New
+					$(this).addClass("active");
+					showingTable = true
+					$(this).addClass("active");
+					showWarningCoperion()
+
+				} else {
+
+					ms_timeout = setTimeout( function () {
+						$('#marketing-sales').removeClass( 'is-active' );
+					}, 100 );
+
+					$("#tableTabs h4.active").removeClass("active");
+					showingTable = false;
+
+				}
+
+				
+			}
 
 		} else {
+
+			ms_timeout = setTimeout( function () {
+				$('#marketing-sales').removeClass( 'is-active' );
+			}, 100 );
+
 			hideExtended()
 
 			// console.log($(this).index())
