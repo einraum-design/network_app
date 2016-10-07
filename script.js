@@ -207,8 +207,8 @@ $(document).ready(function(){
 		if (graphView == true){
 			graphView = false
 			$(".graphImg").hide()
-			$("#btns4").children("p:first").children("img").attr({"src": "img/radio_on.png"})
-			$("#btns4").children("p:last").children("img").attr({"src": "img/radio_off.png"})
+			$("#btns4").children("li:first").addClass("active")
+			$("#btns4").children("li:last").removeClass("active")
 			$("#infoNames").show().siblings("p").show()
 			$("#valTab").show()
 			$("#graphBtns").hide()
@@ -223,14 +223,14 @@ $(document).ready(function(){
 			graphView = true
 			$(".graphImg:eq(0)").show()
 			$(".graphImg:eq(1)").show()
-			$("#btns4").children("p:first").children("img").attr({"src": "img/radio_off.png"})
-			$("#btns4").children("p:last").children("img").attr({"src": "img/radio_on.png"})
+			$("#btns4").children("li:first").removeClass("active")
+			$("#btns4").children("li:last").addClass("active")
 			$("#infoNames").hide().siblings("p").hide()
 			$("#valTab").hide()
 			$("#graphBtns").show()
 		}
 	}
-	$("#btns4").children("p").on("click", switchTableGraph)
+	$("#btns4").children("li").on("click", switchTableGraph)
 
 	function toggleLineGraph(){
 		var number = $(this).index()
@@ -1192,7 +1192,7 @@ $(document).ready(function(){
 			}
 
 			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold")
-			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>stock")
+			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>for sale available")
 			$("#btns3").hide()
 
 		} else if (number == 7){

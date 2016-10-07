@@ -370,37 +370,37 @@ ul#btns2 {
 	margin: 10px;
 }
 
-#technical #btns2 li{
+#technical #btns2 li, #btns4 li{
 	color: #7c9cbb;
 	padding: 3px;
 	margin: 5px;
 	display: inline-block;
 }
 
-#btns li img, #btns2 li img{
+#btns li img, #btns2 li img, #btns4 li img {
 	vertical-align: -8px;
 }
 
 
-#technical #btns2 li {
+#technical #btns2 li, #btns4 li {
 	position: relative;
 	z-index: 1;
 	color:#b3b3b3;
 }
 
-#technical #btns2 li.active {
+#technical #btns2 li.active, #btns4 li.active {
 	color:#000;
 }
 
-#technical #btns2 li:first-child {
+#technical #btns2 li:first-child, #btns4 li:first-child {
 	padding-right: 15px;
 }
 
-#technical #btns2 li:last-child {
+#technical #btns2 li:last-child, #btns4 li:last-child {
 	padding-left: 15px;
 }
 
-#technical #btns2 li:first-child:after {
+#technical #btns2 li:first-child:after, #btns4 li:first-child:after {
 	content:"";
 	z-index: 3;
 	width: 10px;
@@ -415,7 +415,7 @@ ul#btns2 {
     transition: all 400ms;
 }
 
-#technical #btns2 li:first-child:before {
+#technical #btns2 li:first-child:before, #btns4 li:first-child:before {
 	content: "";
 	z-index: 2;
 	width: 32px;
@@ -429,7 +429,7 @@ ul#btns2 {
 }
 
 
-#technical #btns2 li.active:first-child:after {
+#technical #btns2 li.active:first-child:after, #btns4 li.active:first-child:after {
 	right: -5px;
 }
 
@@ -776,7 +776,7 @@ ul#btns2 {
 	opacity: 0;
 }
 
-#mapLegend abc, #techLegend abc {
+#mapLegend abc, #techLegend abc, .infoMaterials .materialLegend abc {
 	width: 10pt;
 	height: 10pt;
 	display: inline-block;
@@ -1291,6 +1291,12 @@ ul#btns2 {
 .notNeeded {
 	background-image: url(img/unusedline.png) !important;
 	background-size: 100% auto;
+}
+
+#popup .notNeeded {
+	background-size: auto 85%;
+    background-repeat: repeat-x;
+    background-position: bottom;
 }
 
 
