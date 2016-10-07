@@ -539,7 +539,8 @@ ul#btns2 {
 
 #popup h3{
 	font-weight: normal;
-	width: 120px;
+	/*width: 120px;*/
+	width: 150px;
 	position: relative;
 	float: left;
 	background-color: white;
