@@ -1361,3 +1361,10 @@ ul#btns2 {
 #technical[data-tech="3"] #techLegend {
 	display: none;
 }
+
+#infoNames li {
+	max-width: 170px;
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
