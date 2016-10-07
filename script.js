@@ -911,7 +911,7 @@ $(document).ready(function(){
 		// DIESES VERSCHISSENE CSS UMGEHEN, DAS DIE ÜBERSCHRIFT NICHT KÜRZEN KANN
 		if (number != 0 && number != 2){
 			$(".countryInfo:gt(1)").each(function(){
-				$(this).children("h4").css({"max-width" : $(this).children("ul").length*140 + "px"})
+				$(this).children("h4").css({"max-width" : $(this).children("ul").length*160 + "px"})
 			})
 		}
 
@@ -1486,7 +1486,7 @@ var tableHeads = [
 	["PE", "PP", "Add. Powder + Y", "Add. Pellets + B", "Premix", "GF", "CaCO3"],
 	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
 	["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"],
-	["Working Hours", "Working Days", "max Availability", "Stagnation", "Workload*", "Ø Set-Up-Time*", "Defective Goods*", "Complaints*", "OEE", "RMYE"],
+	["Availability", "Ø product change over [min.]", "maintenance", "scrap rate", "customer complaints"],
 	["Produktionsbestand", "Verkaufspreis", "Herstellungskosten"],
 	["Spalte 1", "Spalte 2", "Spalte 3", "Spalte 4"],
 ]
@@ -1631,22 +1631,22 @@ var soldProductData = [
 ]
 
 var efficiencyVal =[
-	["16&thinsp;h", "251&thinsp;h", "4016&thinsp;h/y", "38,<comma>47</comma>&thinsp;h/m", "90%", "6,<comma>3</comma>&thinsp;h", "2,<comma>2</comma>%", 3, "84%", "98,<comma>00</comma>%"],
-	["16&thinsp;h", "251&thinsp;h", "4016&thinsp;h/y", "48,<comma>16</comma>&thinsp;h/m", "88%", "3,<comma>16</comma>&thinsp;h", "4,<comma>8</comma>%", 1, "80%", "96,<comma>50</comma>%"],
+	["4016&thinsp;h/y", "90", "40&thinsp;h/y", "2,20%", "3" ],
+	["4016&thinsp;h/y", "84", "65&thinsp;h/y", "1,90%", "1" ],
 	[],
-	["16&thinsp;h", "252&thinsp;h", "4032&thinsp;h/y", "57,<comma>70</comma>&thinsp;h/m", "85%", "5,<comma>8</comma>&thinsp;h", "7%", 0, "75%", "94,<comma>20</comma>%"],
-	["16&thinsp;h", "252&thinsp;h", "4032&thinsp;h/y", "110,<comma>80</comma>&thinsp;h/m", "70%", "8&thinsp;h", "6,<comma>8</comma>%", 2, "62%", "95,<comma>40</comma>%"],
+	["4032&thinsp;h/y", "162", "25&thinsp;h/y", "1,40%", "0" ],
+	["4032&thinsp;h/y", "192", "18&thinsp;h/y", "1,10%", "1" ],
 	[],
-	["24&thinsp;h", "249&thinsp;h", "5976&thinsp;h/y", "41,<comma>34</comma>&thinsp;h/m", "92%", "2,<comma>2</comma>&thinsp;h", "1,<comma>9</comma>%", 0, "86%", "98,<comma>20</comma>%"],
-	["24&thinsp;h", "249&thinsp;h", "5976&thinsp;h/y", "36,<comma>68</comma>&thinsp;h/m", "94%", "1,<comma>6</comma>&thinsp;h", "2,<comma>4</comma>%", 4, "87%", "97,<comma>60</comma>%"],
-	["24&thinsp;h", "249&thinsp;h", "5976&thinsp;h/y", "66,<comma>74</comma>&thinsp;h/m", "87%", "7,<comma>5</comma>&thinsp;h", "2%", 1, "81%", "97,<comma>95</comma>%"],
+	["5976&thinsp;h/y", "84", "35&thinsp;h/y", "1,90%", "1" ],
+	["5976&thinsp;h/y", "93", "28&thinsp;h/y", "2,40%", "4" ],
+	["5976&thinsp;h/y", "84", "45&thinsp;h/y", "2,00%", "1" ],
 	[],
-	["24&thinsp;h", "250&thinsp;h", "6000&thinsp;h/y", "48,<comma>90</comma>&thinsp;h/m", "91%", "3,<comma>8</comma>&thinsp;h", "3,<comma>4</comma>%", 0, "84%", "93,<comma>60</comma>%"],
+	["6000&thinsp;h/y", "135", "51&thinsp;h/y", "3,40%", "5" ],
 	[],
-	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "28,<comma>70</comma>&thinsp;h/m", "94%", "2,<comma>4</comma>&thinsp;h", "8,<comma>2</comma>%", 2, "82%", "89,<comma>25</comma>%"],
-	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "45,<comma>33</comma>&thinsp;h/m", "87%", "5,<comma>6</comma>&thinsp;h", "2,<comma>5</comma>%", 5, "81%", "91,<comma>15</comma>%"],
-	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "155,<comma>33</comma>&thinsp;h/m", "60%", "6,<comma>5</comma>&thinsp;h", "4,<comma>7</comma>%", 1, "54%", "78,<comma>60</comma>%"],
-	["16&thinsp;h", "250&thinsp;h", "4000&thinsp;h/y", "202,<comma>67</comma>&thinsp;h/m", "50%", "10,<comma>2</comma>&thinsp;h", "1,<comma>2</comma>%", 2, "47%", "77,<comma>90</comma>%"],
+	["4000&thinsp;h/y", "66", "31&thinsp;h/y", "3,50%", "3" ],
+	["4000&thinsp;h/y", "75", "28&thinsp;h/y", "0,70%", "4" ],
+	["4000&thinsp;h/y", "111", "45&thinsp;h/y", "4,70%", "1" ],
+	["4000&thinsp;h/y", "87", "59&thinsp;h/y", "1,20%", "2" ],
 ]
 
 var productionNeedDay = [

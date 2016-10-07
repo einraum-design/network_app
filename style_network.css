@@ -1334,8 +1334,12 @@ ul#btns2 {
 
 #technical[data-tech="3"] h4 {
 	padding-right: 25px;
-	width: 140px;
+	width: 160px;
 	position: relative;
+}
+
+#technical[data-tech="3"] .countryInfo ul, #technical[data-tech="3"] .productionPlanColumn ul {
+	width: 150px;
 }
 
 #technical[data-tech="2"] .used {
