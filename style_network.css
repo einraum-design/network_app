@@ -1390,11 +1390,7 @@ ul#btns2 {
 	top: 75px;
 	width: 100%;
 	height: calc(100% - 125px);
-	background-color: #fff;
-	background-image: url(img/marketing-sales.jpg);
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
+	background-color: rgba(255,255,255,0.9);
 	display: none;
 }
 
@@ -1451,4 +1447,76 @@ ul#btns2 {
 	text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+}
+
+
+#marketing-sales .marketingNav {
+
+	position: absolute;
+	left:20px;
+	top:50px;
+	bottom: 0;
+	width: 140px;
+
+}
+
+#marketing-sales .marketingNav > div {
+	background-color:#e6e9ee;
+	padding: 15px 10px;
+	margin-right: 10px;
+	margin-bottom: 5px;
+	font-weight: 100;
+	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-appearance: none;
+	user-select(none);
+	text-decoration:none;
+}
+
+#marketing-sales .marketingNav > div.active {
+	background-color: #8ba4c3;
+	color:#fff;
+}
+
+
+#marketing-sales .marketingContent {
+	position: absolute;
+	left:160px;
+	top: 50px;
+	bottom: 0;
+	right: 20px;
+	overflow-y:scroll;
+}
+
+#marketing-sales .marketingContent .marketingTab {
+	display: none;
+}
+
+#marketing-sales .marketingContent .marketingTab.active {
+	display: block;
+}
+
+#marketing-sales .mkt_big {
+	width: calc((100% / 3) * 2);
+	float: left;
+	box-sizing:border-box;
+	padding-right: 10px;
+}
+
+#marketing-sales .mkt_small {
+	width: calc((100% / 3));
+	float: left;
+}
+
+#marketing-sales .mkt_boxHeader {
+	background-color: #e0e0e0;
+	line-height: 50px;
+	position: relative;
+}
+
+#marketing-sales .mkt_switch {
+	float: right;
+	position: absolute;
+	right: 0;
+	top: 0;
 }

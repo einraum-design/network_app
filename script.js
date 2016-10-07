@@ -1510,7 +1510,7 @@ $(document).ready(function(){
 // 	$('#marketing-sales').toggleClass( 'is-active' );
 // }
 
-$( '#marketing-sales' ).on( 'click', hideMarketingAndSales );
+// $( '#marketing-sales' ).on( 'click', hideMarketingAndSales );
 
 var ms_timeout;
 
@@ -1918,3 +1918,30 @@ var apiData = {
 }
 
 apiData.init();
+
+
+var marketing = {
+
+	init: function() {
+
+		$("#marketing-sales .marketingNav > div").on("click", function(){
+
+			$("#marketing-sales .marketingNav > div").removeClass("active");
+			$(this).addClass("active");
+
+			var tab = $(this).data("target");
+
+			$(".marketingTab").removeClass("active");
+			$( "#"+tab+".marketingTab").addClass("active");
+
+		});
+
+
+	}
+
+
+
+
+}
+
+marketing.init();
