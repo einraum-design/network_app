@@ -879,6 +879,7 @@ ul#btns2 {
 	padding-right: 15px;
 	box-sizing:border-box;
 	height: 48px;
+	margin-top: 1px;
 }
 
 #technical h4.collapsed {
@@ -922,6 +923,19 @@ ul#btns2 {
 	margin-right: 1px !important;
 	--margin-bottom: 80px;
 	--height: 700px;
+	
+}
+
+.productionPlanColumn {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#7c9cbb+0,ffffff+100&0.15+0,0+100 */
+	background: -moz-linear-gradient(left,  rgba(124,156,187,0.15) 0%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  rgba(124,156,187,0.15) 0%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  rgba(124,156,187,0.15) 0%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#267c9cbb', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+}
+
+#techNames + .productionPlanColumn {
+	background: none;
 }
 
 .collapseBtn{
