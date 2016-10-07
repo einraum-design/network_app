@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52" height="45" viewBox="0 0 52 45">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7c9cbb;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <path id="rain_hail" data-name="rain, hail" class="cls-1" d="M256,474h-1v-3h1a7,7,0,1,0-1.122-13.887A13.488,13.488,0,1,0,228,455.5c0,0.03,0,.059,0,0.089A8,8,0,1,0,225,471h0v3h0a11,11,0,0,1,0-22c0.127,0,.25.015,0.375,0.019a16.49,16.49,0,0,1,32.559,2.172A10,10,0,0,1,256,474Zm-25-10v10h-3V464h3Zm0,17h-4v-4h4v4Zm4-14h3v10h-3V467Zm3,17h-4v-4h4v4Zm7-20v10h-3V464h3Zm0,17h-4v-4h4v4Zm4-14h3v10h-3V467Zm3,17h-4v-4h4v4Z" transform="translate(-214 -439)"/>
+</svg>

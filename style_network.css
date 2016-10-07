@@ -218,6 +218,69 @@ time{
 	z-index: 5;
 }
 
+.mapInfo:before {
+	content: attr(data-temp);
+	position: absolute;
+	z-index: 7;
+	left:-62px;
+	color:#7c9cbb;
+	font-size: 8pt;
+	top:4px;
+}
+
+.mapInfo.leftFlag:before {
+	left:auto;
+	right: -62px;
+}
+
+.mapInfo.bottomFlag:before {
+	top:74px;
+}
+
+.mapInfo.bottomFlag {
+	padding-top: 70px;
+}
+
+.mapInfo.bottomFlag img {
+	bottom: 70px;
+}
+
+.mapInfo.bottomFlag .line {
+	bottom: 31px;
+}
+
+.mapInfo:after {
+	content: " ";
+	position: absolute;
+	z-index: 7;
+	width: 30px;
+	height: 30px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	left:-22px;
+	top: -6px;
+}
+
+.mapInfo.leftFlag:after {
+	left:auto;
+	right: -22px;
+}
+
+.mapInfo.bottomFlag:after {
+	top:62px;
+}
+
+.mapInfo[data-weather="Clear"]:after { 
+	background-image: url("img/weather/Clear.svg");
+ }
+.mapInfo[data-weather="Rain"]:after { 
+	background-image: url("img/weather/Rain.svg");
+ }
+.mapInfo[data-weather="Clouds"]:after { 
+	background-image: url("img/weather/Clouds.svg");
+ }
+
 .mapInfo .line{
 	border-left: 1px solid black;
 	width: 0px;

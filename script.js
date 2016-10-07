@@ -1827,15 +1827,94 @@ var currentDayPercent = {
 }
 
 
+var apiData = {
 
+	data_rss: new Array(),
+	data_coperion: new Array(),
+	data_weather: new Array(),
 
+	init: function() {
 
+		apiData.loadData();
+		setInterval(apiData.loadData(), 1800);
 
+	},
 
+	refreshServerData: function() {
 
+		$.ajax({
+			dataType: "json",
+			url : "api/data.php",
+			success : function (data) {
+				
+			}
+		});
 
+	},
 
+	loadData: function() {
 
+		apiData.loadFeed("api/kunststoffeDE.data");
+		apiData.loadFeed("api/plasticseuropeORG.data");
+		apiData.loadCoperion("api/coperion.data");
+		apiData.loadWeather("api/weather.data");
+		apiData.refreshServerData();
 
+	},
 
+	loadFeed: function(loadurl) {
 
+		$.ajax({
+			dataType: "json",
+			url : loadurl,
+			success : function (data) {
+				apiData.data_rss[data.title] = data;
+			}
+		});
+
+	},
+
+	loadCoperion: function(loadurl) {
+
+		$.ajax({
+			dataType: "json",
+			url : loadurl,
+			success : function (data) {
+				apiData.data_coperion = data;
+			}
+		});
+
+	},
+
+	loadWeather: function(loadurl) {
+
+		$.ajax({
+			dataType: "json",
+			url : loadurl,
+			success : function (data) {
+				apiData.data_weather = data;
+				apiData.updateWeather();
+			}
+		});
+
+	},
+
+	updateWeather: function() {
+
+		$( ".mapInfo" ).each(function() {
+ 			
+			var current = $(this).data("name");
+			var temperature = apiData.data_weather[current].temp;
+			var weather = apiData.data_weather[current].weather;
+
+			$(this).attr("data-temp", temperature + "°C");
+			$(this).attr("data-weather", weather);
+ 			
+
+		});
+
+	}
+
+}
+
+apiData.init();
