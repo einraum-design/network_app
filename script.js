@@ -44,7 +44,7 @@ $(document).ready(function(){
 	} else if (heute.getDate() == 3 || heute.getDate() == 13 || heute.getDate() == 23) {
 		thstndrd = "rd"
 	} 
-	$("#header h2").html(tage[heute.getDay()] + " " + monate[heute.getMonth()] + " " + heute.getDate())
+	$("#header h2").html(tage[heute.getDay()] + " " + monate[heute.getMonth()] + " " + heute.getDate() + " | " + heute.getHours() + ":" + heute.getMinutes())
 
 	function loadHome(){
 
@@ -495,12 +495,17 @@ $(document).ready(function(){
 				$(".productionPlanColumn").last().children("ul").last().children(".tabHeading").html(tableSubHeads[1][i][k])
 				if (subHeadsCurrent[i][k] != "") {
 					$(".productionPlanColumn").last().children("ul").last().children(".tabHeading").parent().addClass("current");
+					$(".productionPlanColumn ul.current").append("<div class='indicator'></div>");
 				} else {
 					$(".productionPlanColumn").last().children("ul").last().children(".tabHeading").parent().removeClass("current");
+					// $(".indicator").remove();
 				}
 				
 			}
 		}
+
+		currentDayPercent.init();
+
 		$(".productionPlanColumn").insertAfter($(".productionPlanColumn:first"))
 		$(".productionPlanColumn:first").remove()
 
@@ -807,7 +812,7 @@ $(document).ready(function(){
 			var w1 = scaleFactor*100
 			var w2 = 100*needed/stock
 
-			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy(stock/1000) + "&thinsp;t").siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000))
+			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy((stock-needed)/1000) + "&thinsp;t").siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000) + "&thinsp;t")
 
 			if (stock < needed){
 
@@ -878,8 +883,10 @@ $(document).ready(function(){
 			}
 			if (number == 1){
 				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
+			} else if (number == 2) {
+				$("#techLegend").html("<b>Finished products warehouse:</b> <abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold, but still in the warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>for sale available")
 			} else {
-				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
+				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>booked for production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>on stock and ordered")
 			}
 			
 		} else if (number != 1) {
@@ -1441,62 +1448,6 @@ function hideMarketingAndSales () {
 	}, 100 );
 }
 
-
-var news = {
-
-	data: "",
-
-	init: function() {
-
-		// hiddenEvents.loadData();
-		// $(".hiddenEvents .hiddenMaintenance").on('click', function() {
-		// 	hiddenEvents.maintenance();
-		// });
-
-		// $(".hiddenEvents .hiddenError").on('click', function() {
-		// 	hiddenEvents.error();
-		// });
-
-		// $(".hiddenError-Forwarding .knob").removeClass("loaded");
-
-	},
-
-	loadData: function() {
-
-		// $.get("http://www.plasticstoday.com/rss.xml").done(function (data) {
-		//     news.data = data;
-		// 	console.log(news.data);
-		// });
-
-
-		$.ajax({
-		    xhrFields: {
-		        withCredentials: true
-		    },
-		    type: "GET",
-		    url: "https://www.kunststoffe.de/en/news/overview/rss"
-		}).done(function (data) {
-		    console.log(data);
-		});
-
-		// $.ajax({
-		// 	dataType: "xml",
-		// 	crossDomain: true,
-		// 	beforeSend: setHeader,
-		// 	url : "http://www.plasticstoday.com/rss.xml",
-		// 	success : function (data) {
-		// 			news.data = data;
-		// 			console.log(news.data);
-		// 			// console.log(hiddenEvents.data);
-		// 	}
-		// });
-
-	}
-
-}
-
-news.loadData();
-
 // WERTE
 
 var heute = new Date()
@@ -1757,6 +1708,50 @@ var productionNeedWeek = [
 	[0,0,0,0,0,0,0],
 	[0,0,0,0,0,0,0],
 ]
+
+
+
+var currentDayPercent = {
+
+	init: function() {
+
+		currentDayPercent.productionTime();
+		setInterval(function(){ currentDayPercent.productionTime(); }, 60000);
+
+	},
+
+	getPercent: function() {
+
+		var tempNow = Math.floor(Date.now() / 1000);
+		var start = new Date();
+		start.setHours(0,0,0,0);
+		start = Math.floor(start.getTime() / 1000);
+		var timePercent = ((tempNow - start) / 86400)*100;
+		return timePercent;
+
+	},
+
+	mapRange: function(value, low1, high1, low2, high2) {
+		return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+	},
+
+	productionTime: function() {
+
+		var setProgress = parseInt(currentDayPercent.mapRange(currentDayPercent.getPercent(), 0, 100, 0, 61));
+		$(".productionPlanColumn ul.current .indicator").css('margin-left', setProgress+'px');
+
+	}
+
+
+}
+
+
+
+
+
+
+
+
 
 
 

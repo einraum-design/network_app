@@ -309,7 +309,6 @@ dot{
 }
 
 .leftFlag .information li b {
-	font-weight: 400;
 	color:#2e2e2e;
 }
 
@@ -748,14 +747,14 @@ ul#btns2 {
 	position: fixed;
 	left: -5px;
 	top: 45px;
-	z-index: 4;
+	z-index: 50;
 	padding: 20px;
 	font-size: 22pt;
 	line-height: 20px;
 	opacity: 0;
 }
 
-#techLegend{
+#mapLegend, #techLegend{
 	position: fixed;
 	right: 10px;
 	bottom:68px;
@@ -767,7 +766,17 @@ ul#btns2 {
 	margin: 0;
 }
 
-#techLegend abc {
+#mapLegend {
+	opacity: 1;
+	-webkit-transition: all 200ms; 
+    transition: all 200ms;
+}
+
+#mapDiv.blur #mapLegend {
+	opacity: 0;
+}
+
+#mapLegend abc, #techLegend abc {
 	width: 10pt;
 	height: 10pt;
 	display: inline-block;
@@ -777,7 +786,11 @@ ul#btns2 {
 	margin-bottom: -2px;
 }
 
-#techLegend span {
+#mapLegend abc {
+	border-radius: 50%;
+}
+
+#mapLegend span ,#techLegend span {
 	color:#517598;
 	text-transform: uppercase;
 	display: inline-block;
@@ -1162,6 +1175,7 @@ ul#btns2 {
 
 #technical[data-tech="0"] .columnShort, #technical[data-tech="2"] .columnShort {
 	padding-top: 90px;
+	margin-left: 10px;
 }
 
 #technical[data-tech="0"] #techNames, #technical[data-tech="2"] #techNames {
@@ -1252,6 +1266,18 @@ ul#btns2 {
 	background-color: #b4c6d7;
 }
 
+.productionPlanColumn ul.current .indicator {
+	position: absolute;
+	z-index: 10;
+	content: " ";
+	top:54px;
+	bottom:3px;
+	width: 1px;
+	left: -11px;
+	background-color: #2e2e2e;
+	opacity: 0.25;
+}
+
 .productionPlanColumn ul.current li {
 	position: relative;
 	z-index: 3;
@@ -1310,6 +1336,11 @@ ul#btns2 {
 	padding-right: 25px;
 	width: 140px;
 	position: relative;
+}
+
+#technical[data-tech="2"] .used {
+	margin-top: 0;
+	padding-top: 4px;
 }
 
 #technical[data-tech="3"] h4 img {
