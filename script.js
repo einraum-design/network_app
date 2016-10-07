@@ -413,6 +413,8 @@ $(document).ready(function(){
 					$("#tableTabs h4.active").removeClass("active");
 					showingTable = false;
 
+					$("#mapDiv").removeClass("blur");
+
 				}
 
 				
@@ -424,7 +426,8 @@ $(document).ready(function(){
 				$('#marketing-sales').removeClass( 'is-active' );
 			}, 100 );
 
-			hideExtended()
+			hideExtended();
+			$("#mapDiv").removeClass("blur");
 
 			// console.log($(this).index())
 
@@ -457,6 +460,7 @@ $(document).ready(function(){
 				if ($(this).is( ".active" ) == false && $(this).attr("id") != "closeBtn2") {
 
 					$("#tableTabs h4.active").removeClass("active");
+					$("#mapDiv").addClass("blur");
 
 					//$(this).attr({"src": "img/list_filled_fafafa.png"})
 					//$("#toggleText").html("Liste")
@@ -521,14 +525,29 @@ $(document).ready(function(){
 	}
 	//$("#toggle").on("touchend", toggleViews)
 
-	$("#closeBtn2").on("touchstart", function(){
+	$("#closeBtn2").on("touchstart, click", function(){
 		$(this).css({"opacity": 0.5})
+		// toggleViews();
+
+
+		$("#tableTabs h4.active").removeClass("active");
+		showingTable = false;
+		$("#closeBtn2").animate({"opacity":0});
+		$("#techLegend").animate({"opacity":0});
+		$("#btns2").animate({"opacity": 0});
+		$("body").css({"overflow": "hidden"});
+		$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
+			$(this).css({"pointer-events": "none", "display": "none"})
+			$("body").css({"overflow": "visible"})
+			$("#mapDiv").removeClass("blur");
+		})
+
 	})
-	$("#closeBtn2").on("click", function(){
-		$(this).css({"opacity": 0.3})
-		$("#mapDiv").removeClass("blur");
-		toggleViews()
-	})
+	// $("#closeBtn2").on("click", function(){
+	// 	$(this).css({"opacity": 0.3})
+	// 	$("#mapDiv").removeClass("blur");
+	// 	toggleViews()
+	// })
 
 	// table tabs
 	$("#tableTabs h4").on("touchstart", function(){
@@ -1655,15 +1674,15 @@ var recipeValues = [
 // stockData, finishedProductData, soldProductData sind relativ frei erfunden und richtet sich grob nach den infos auf dem plan mit dem spongebob
 var stockData = [
 	[],
-	[22500*2.1, 25000*1.9, 2000*1.9, 2000*1.8, 7500*2.1, 10000*2, 40000*2.1],
+	[22500*2.6, 25000*5.9, 2000*1.9, 2000*1.8, 7500*8, 10000*6, 40000*3.1],
 	[],
-	[22500*2.1, 25000*1.9, 2000*2.1, 2000*1.9, 7500*2, 15000*2.1, 40000*1.8],
+	[22500*2.3, 25000*4.9, 2000*3.4, 2000*3.2, 7500*2, 15000*7.1, 40000*1.8],
 	[],
-	[22500*4.1, 25000*3.9, 2000*2.9, 2000*2.9, 7500*3.1, 15000*3.1, 40000*3.1],
+	[22500*14.1, 25000*9.7, 2000*6.9, 2000*5.4, 7500*5.8, 15000*12.6, 40000*6.1],
 	[],
-	[22500*0.9, 35000*1.1, 2000*1.1, 2000*1.1, 20000*1.1, 20000*0.9, 40000*1.1],
+	[22500*0.9, 35000*1.1, 2000*1.1, 2000*5.1, 20000*2.5, 20000*4.9, 40000*2.4],
 	[],
-	[22500*4.1, 25000*3.9, 2000*4, 2000*4, 7500*4.1, 7500*4.1, 40000*4],
+	[22500*6.7, 25000*8.9, 2000*4, 2000*4, 7500*7.5, 7500*18.1, 40000*4],
 ]
 
 var finishedProductData = [
