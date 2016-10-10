@@ -50,11 +50,12 @@ function getCoperionFeed($feed_url, $coperionFile) {
 	foreach($html->find('div.news-latest-item') as $e)  {
 		
 		$text = explode(" &ndash; ", $e->find("p")[0]->innertext);
-
 		$t = strtotime($text[0]);
 		$temp["date"] = date('d. F Y',$t);
 		$temp["title"] = $e->find("h2 a")[0]->innertext;
-		$temp["description"] = htmlspecialchars($text[1]);
+		$linkpos =  strpos($text[1], "<a href=");
+		$description = substr($text[1], 0, $linkpos);
+		$temp["description"] = htmlspecialchars($description);
 		$temp["link"] = $entry->link."";
 		$coperionNews["items"][] = $temp;
 	}

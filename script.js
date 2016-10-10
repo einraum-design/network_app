@@ -1409,6 +1409,7 @@ $(document).ready(function(){
 	// }
 	function showWarningCoperion(){
 		showMarketingAndSales();
+		apiData.parse();
 		// $("#warningPopup").animate({"zoom": "100%", "opacity": 1}, duration = 350, "easeOutBack").css({"pointer-events": "auto"})
 	}
 
@@ -1840,6 +1841,13 @@ var apiData = {
 
 	},
 
+	parse: function() {
+
+		apiData.parseRSS($("#mkt_rss").data("default"),"#mkt_rss",$("#mkt_rss").data("count"));
+		apiData.parseCop("#mkt_cop",3);
+
+	},
+
 	refreshServerData: function() {
 
 		$.ajax({
@@ -1913,7 +1921,71 @@ var apiData = {
 
 		});
 
+	}, 
+
+	parseRSS: function(data,target,count) {
+
+		var loadData = apiData.data_rss[data];
+		var currentCount = count;
+
+		$( target + " .content" ).innerHTML = "";
+
+		$(loadData.items).each(function(index) {
+
+			currentCount = currentCount - 1;
+
+			if (currentCount >= 0) {
+
+				var current = $(this);
+
+				$( target + " .content" ).append(
+
+					'<div class="news-item">' + 
+					'<h4>' + current[0].title + '</h4>' + 
+					'<h5>' + current[0].date + '</h5>' + 
+					'<p>' + current[0].description + '</p>' + 
+					'</div>'
+
+				);
+
+			} 
+
+		});
+
+	}, 
+
+	parseCop: function(target,count) {
+
+		var loadData = apiData.data_coperion;
+
+		var currentCount = count;
+
+		$( target + " .content" ).innerHTML = "";
+
+		$(loadData.items).each(function(index) {
+
+			currentCount = currentCount - 1;
+
+			if (currentCount >= 0) {
+
+				var current = $(this);
+
+				$( target + " .content" ).append(
+
+					'<div class="news-item">' + 
+					'<h4>' + current[0].title + '</h4>' + 
+					'<h5>' + current[0].date + '</h5>' + 
+					'<p>' + current[0].description + '</p>' + 
+					'</div>'
+
+				);
+
+			} 
+
+		});
+
 	}
+
 
 }
 
@@ -1939,7 +2011,7 @@ var marketing = {
 
 	}
 
-
+	// Update Funktion einbauen
 
 
 }
