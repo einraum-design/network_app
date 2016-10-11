@@ -25,11 +25,7 @@ $(document).ready(function(){
 	var todayTabNumber = 0
 	var onInfoPage = 0
 
-	var newsListe = ["Schöne Anlage, <b>@coperion</b>",
-		"hdf <b>#coperion</b> euer stand ist so klasse",
-		// "<b>#coperion</b> ich werde meine drei Erstgeborenen nach euch benennen.",
-		// "Doperion <b>@coperion</b>",
-		// "I can’t <b>#coperion</b> with dat awesumness",
+	var newsListe = [
 		"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>"
 	]
 
@@ -1853,6 +1849,7 @@ var apiData = {
 	init: function() {
 
 		apiData.loadData();
+		// apiData.addToNews();
 		setInterval(apiData.loadData(), 1800);
 
 	},
@@ -1872,6 +1869,29 @@ var apiData = {
 			success : function (data) {
 				
 			}
+		});
+
+	},
+
+	addToNews: function() {
+
+		
+		var loadData = apiData.data_rss["kunststoffe.de"];
+		var currentCount = 5;
+
+		
+		$(loadData.items).each(function(index) {
+
+			currentCount = currentCount - 1;
+
+			if (currentCount >= 0) {
+
+				var current = $(this);
+
+				newsListe.push(current[0].title);
+
+			} 
+
 		});
 
 	},

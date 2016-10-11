@@ -1364,7 +1364,8 @@ ul#btns2 {
 	width: 1px;
 	left: -11px;
 	background-color: #2e2e2e;
-	opacity: 0.25;
+	/*opacity: 0.25;*/
+	opacity: 0;
 }
 
 .productionPlanColumn ul.current li {
