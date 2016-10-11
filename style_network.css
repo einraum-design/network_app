@@ -1256,6 +1256,10 @@ ul#btns2 {
 	display: absolute;
 	--height: 30px;
 	overflow: visible;
+	max-height: 35px;
+	text-overflow: ellipsis;
+    overflow: hidden;
+    /*white-space: nowrap;*/
 }
 
 

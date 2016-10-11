@@ -1,3 +1,21 @@
+var newsListe = [
+	"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>"
+]
+
+var newsListeNummer = 1
+function updateTigger(){
+
+	$("#tigger p").first().html($("#tigger p").last().html())
+
+	$("#tigger p").last().html(newsListe[newsListeNummer%newsListe.length])
+	newsListeNummer = newsListeNummer + 1
+
+	$("#tigger p").first().css({"margin-top": 29-$("#tigger p").first().height()*0.5 + "px"}).animate({"margin-top": -$("#tigger p").first().height() + "px"})
+	$("#tigger p").last().css({"margin-top": 29-$("#tigger p").last().height()*0.5 + "px"})
+}
+$("#tigger p").last().html(newsListe[0])
+
+
 $(document).ready(function(){
 
 	var _W = 1024
@@ -24,10 +42,6 @@ $(document).ready(function(){
 	var infoNumber = 0
 	var todayTabNumber = 0
 	var onInfoPage = 0
-
-	var newsListe = [
-		"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>"
-	]
 
 	var tage = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 	var monate = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -1489,20 +1503,9 @@ $(document).ready(function(){
 
 	// news tigger
 
-	var newsListeNummer = 1
-	function updateTigger(){
-
-		$("#tigger p").first().html($("#tigger p").last().html())
-
-		$("#tigger p").last().html(newsListe[newsListeNummer%newsListe.length])
-		newsListeNummer = newsListeNummer + 1
-
-		$("#tigger p").first().css({"margin-top": 29-$("#tigger p").first().height()*0.5 + "px"}).animate({"margin-top": -$("#tigger p").first().height() + "px"})
-		$("#tigger p").last().css({"margin-top": 29-$("#tigger p").last().height()*0.5 + "px"})
-	}
-	$("#tigger p").last().html(newsListe[0])
+	
 	updateTigger()
-	setInterval(updateTigger, 5000)
+	setInterval(updateTigger, 1800)
 
 
 
@@ -1849,7 +1852,6 @@ var apiData = {
 	init: function() {
 
 		apiData.loadData();
-		// apiData.addToNews();
 		setInterval(apiData.loadData(), 1800);
 
 	},
@@ -1876,23 +1878,34 @@ var apiData = {
 	addToNews: function() {
 
 		
-		var loadData = apiData.data_rss["kunststoffe.de"];
-		var currentCount = 5;
+		var loadData = apiData.data_coperion;
+		var currentCount = 3;
 
-		
-		$(loadData.items).each(function(index) {
+		var newsListeTemp = [
+			"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>",
+			"hdf <b>#coperion</b> euer stand ist so klasse"
+		]
 
-			currentCount = currentCount - 1;
+		if (loadData) {
+	
+			$(loadData.items).each(function(index) {
 
-			if (currentCount >= 0) {
+				currentCount = currentCount - 1;
 
-				var current = $(this);
+				if (currentCount >= 0) {
 
-				newsListe.push(current[0].title);
+					var current = $(this);
+					newsListe = newsListeTemp;
+					newsListe.push("<b>News:</b> " + current[0].title);
+					// console.log(newsListe);
 
-			} 
+				} 
 
-		});
+			});
+
+			updateTigger();
+
+		}
 
 	},
 
@@ -1925,6 +1938,7 @@ var apiData = {
 			url : loadurl,
 			success : function (data) {
 				apiData.data_coperion = data;
+				apiData.addToNews();
 			}
 		});
 
