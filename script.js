@@ -616,7 +616,7 @@ $(document).ready(function(){
 
 		// heute schwarz färben
 		$(".tabHeading").each(function(){
-			if ($(this).html() == tage[heute.getDay()]){
+			if ($(this).parent().hasClass("current")){
 				$(this).css({"background-color": "#2e2e2e", "color": "white"})
 				todayTabNumber = $(this).index(".tabHeading")
 				return false

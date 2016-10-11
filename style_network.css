@@ -1401,7 +1401,7 @@ ul#btns2 {
 	top: 75px;
 	width: 100%;
 	height: calc(100% - 125px);
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(255,255,255,0.75);
 	display: none;
 	margin-top: 700px;
 }
@@ -1485,9 +1485,21 @@ ul#btns2 {
 	text-decoration:none;
 }
 
+#marketing-sales .marketingNav > div.closed {
+	background-image: url(img/lock-icon.png);
+	background-size: 13px;
+	background-position: 115px center;
+	background-repeat: no-repeat;
+
+}
+
 #marketing-sales .marketingNav > div.active {
 	background-color: #8ba4c3;
 	color:#fff;
+}
+
+#marketing-sales .marketingNav > div.active.closed {
+	background-image: url(img/lock-icon-active.png);
 }
 
 
@@ -1656,6 +1668,27 @@ ul#btns2 {
 	display: block;
 }
 
+#marketing-sales .centeredHint {
+	text-align: center;
+	padding-top: 50px;
+	font-size: 10pt;
+}
+
+#marketing-sales .centeredHint h1 {
+	font-weight: 100;
+	margin-bottom: 0;
+}
+
+#marketing-sales .centeredHint h3 {
+	color:#808080;
+	font-weight: 100;
+	font-size: 10pt;
+	margin-top: 0;
+}
+
+#marketing-sales .centeredHint p span {
+	color:#7c9cbb;
+}
 
 /*@media screen and (min-width: 1024px) {
 
