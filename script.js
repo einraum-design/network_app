@@ -1821,7 +1821,7 @@ var currentDayPercent = {
 
 		var tempNow = Math.floor(Date.now() / 1000);
 		var start = new Date();
-		start.setHours(0,0,0,0);
+		start.setHours(6,0);
 		start = Math.floor(start.getTime() / 1000);
 		var timePercent = ((tempNow - start) / 86400)*100;
 		return timePercent;
