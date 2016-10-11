@@ -1468,7 +1468,7 @@ ul#btns2 {
 	left:15px;
 	top:50px;
 	bottom: 0;
-	width: 140px;
+	width: 150px;
 
 }
 
@@ -1493,11 +1493,17 @@ ul#btns2 {
 
 #marketing-sales .marketingContent {
 	position: absolute;
-	left:160px;
+	left:165px;
 	top: 50px;
 	bottom: 0;
 	right: 15px;
 	overflow-y:scroll;
+}
+
+#marketing-sales img {
+	max-width: 100%;
+	height: auto;
+	margin-top: -15px;
 }
 
 #marketing-sales .marketingContent .marketingTab {
@@ -1513,6 +1519,10 @@ ul#btns2 {
 	float: left;
 	box-sizing:border-box;
 	padding-right: 10px;
+}
+
+#marketing-sales .mkt_big .mkt_box {
+	background-color: rgba(0,0,0,0.05);
 }
 
 #marketing-sales .mkt_small {
@@ -1537,7 +1547,7 @@ ul#btns2 {
 	margin-bottom: 10px;
 }
 
-#marketing-sales .mkt_switch {
+#marketing-sales .mkt_switch .active {
 	float: right;
 	position: absolute;
 	right: 0;
@@ -1580,7 +1590,7 @@ ul#btns2 {
 	font-weight: 100;
 }
 
-.mkt_switch {
+.mkt_switch .active {
 	line-height: 30px;
 	font-size: 9pt;
 	background-color: #fff;
@@ -1594,7 +1604,7 @@ ul#btns2 {
 	position: relative;
 }
 
-.mkt_switch:after {
+.mkt_switch .active:after {
 	width: 0; 
  	height: 0; 
 	border-left: 7px solid transparent;
@@ -1604,6 +1614,46 @@ ul#btns2 {
     position: absolute;
     right: 12px;
     top: 12px;
+}
+
+.mkt_switch .options {
+	position: absolute;
+    top: 50px;
+    right: 3px;
+    background: rgba(255,255,255,0.9);
+    left: 3px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.3);
+    display: none;
+}
+
+.mkt_switch .options:before {
+	position: absolute;
+	top: -7px;
+	right: 18px;
+	content: " ";
+	width: 0; 
+  	height: 0; 
+  	border-left: 9px solid transparent;
+  	border-right: 9px solid transparent;
+  	border-bottom: 9px solid #fff;
+}
+
+.mkt_switch .options > div {
+	padding-left: 10px;
+	padding-right: 20px;
+	font-size: 10pt;
+	color:#7c9cbb;
+	line-height: 40px;
+	border-top:1px solid #efefef;
+	text-align: right;
+}
+
+.mkt_switch .options > div:first-child {
+	border-top: 0px solid #efefef;
+}
+
+.mkt_switch .options.drop {
+	display: block;
 }
 
 

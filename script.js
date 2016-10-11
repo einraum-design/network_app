@@ -44,7 +44,17 @@ $(document).ready(function(){
 	} else if (heute.getDate() == 3 || heute.getDate() == 13 || heute.getDate() == 23) {
 		thstndrd = "rd"
 	} 
-	$("#header h2").html(tage[heute.getDay()] + " " + monate[heute.getMonth()] + " " + heute.getDate() + " | " + heute.getHours() + ":" + heute.getMinutes())
+
+
+	function pad(value) {
+	    if(value < 10) {
+	        return '0' + value;
+	    } else {
+	        return value;
+	    }
+	}
+
+	$("#header h2").html(tage[heute.getDay()] + " " + monate[heute.getMonth()] + " " + heute.getDate() + " &nbsp; " + pad(heute.getHours()) + ":" + pad(heute.getMinutes()))
 
 	function loadHome(){
 
@@ -395,11 +405,15 @@ $(document).ready(function(){
 						$("body").css({"overflow": "visible"})
 					})
 
+
+
 					// Open New
 					$(this).addClass("active");
 					showingTable = true
 					$(this).addClass("active");
 					showWarningCoperion()
+
+					$("#marketing-sales").stop(true).css({"pointer-events": "auto", "margin-top": "780 px"}).animate({"margin-top" : "0px"}, 400);
 
 				} else {
 
@@ -2008,6 +2022,30 @@ var marketing = {
 			$( "#"+tab+".marketingTab").addClass("active");
 
 		});
+
+
+		$(".mkt_switch .active").on("click", function() {
+
+			$(this).siblings(".options").first().toggleClass("drop");
+
+		});
+
+
+		$(".js-rss-options > div").on("click", function() {
+
+			apiData.parseRSS($(this).data("rss"),"#mkt_rss",$(this).data("count"));
+			$(this).parent().removeClass("drop");
+
+		});
+
+		$(".js-graph-options > div").on("click", function() {
+
+			var newSrc = $(this).data("src");
+			$("#marketingmaterial").attr("src",newSrc);
+			$(this).parent().removeClass("drop");
+
+		});
+
 
 
 		$("#closeMarketing").on("click", function() {
