@@ -371,10 +371,7 @@ $(document).ready(function(){
 				$("#btns2").animate({"opacity": 0})
 
 				$("body").css({"overflow": "hidden"})
-				$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
-					$(this).css({"pointer-events": "none", "display": "none"})
-					$("body").css({"overflow": "visible"})
-				})
+				$("#marketing-sales").stop(true).css({"pointer-events": "auto", "margin-top": "780 px"}).animate({"margin-top" : "0px"}, 400);
 
 				$(this).addClass("active");
 				showingTable = true
@@ -406,9 +403,13 @@ $(document).ready(function(){
 
 				} else {
 
+
+
 					ms_timeout = setTimeout( function () {
 						$('#marketing-sales').removeClass( 'is-active' );
 					}, 100 );
+
+					$("#marketing-sales").stop(true).css({"pointer-events": "auto", "margin-top": "0px"}).animate({"margin-top" : "700px"}, 400);
 
 					$("#tableTabs h4.active").removeClass("active");
 					showingTable = false;
@@ -1410,6 +1411,7 @@ $(document).ready(function(){
 	function showWarningCoperion(){
 		showMarketingAndSales();
 		apiData.parse();
+		$("#mapDiv").addClass("blur");
 		// $("#warningPopup").animate({"zoom": "100%", "opacity": 1}, duration = 350, "easeOutBack").css({"pointer-events": "auto"})
 	}
 
@@ -1844,7 +1846,7 @@ var apiData = {
 	parse: function() {
 
 		apiData.parseRSS($("#mkt_rss").data("default"),"#mkt_rss",$("#mkt_rss").data("count"));
-		apiData.parseCop("#mkt_cop",3);
+		apiData.parseCop("#mkt_cop","3");
 
 	},
 
@@ -1928,7 +1930,7 @@ var apiData = {
 		var loadData = apiData.data_rss[data];
 		var currentCount = count;
 
-		$( target + " .content" ).innerHTML = "";
+		$( target + " .content" ).html("");
 
 		$(loadData.items).each(function(index) {
 
@@ -1960,7 +1962,7 @@ var apiData = {
 
 		var currentCount = count;
 
-		$( target + " .content" ).innerHTML = "";
+		$( target + " .content" ).html("");
 
 		$(loadData.items).each(function(index) {
 
@@ -1986,7 +1988,6 @@ var apiData = {
 
 	}
 
-
 }
 
 apiData.init();
@@ -2009,10 +2010,25 @@ var marketing = {
 		});
 
 
+		$("#closeMarketing").on("click", function() {
+
+			$("#technical").stop(true).animate({"margin-top" : "780px"}, 400, function(){
+				$(this).css({"pointer-events": "none", "display": "none"})
+				$("body").css({"overflow": "visible"})
+			})
+
+			ms_timeout = setTimeout( function () {
+				$('#marketing-sales').removeClass( 'is-active' );
+			}, 100 );
+			
+			$("#tableTabs h4.active").removeClass("active");
+			showingTable = false;
+
+			$("#mapDiv").removeClass("blur");
+
+		});
+
 	}
-
-	// Update Funktion einbauen
-
 
 }
 

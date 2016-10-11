@@ -818,6 +818,17 @@ ul#btns2 {
 	opacity: 0;
 }
 
+#closeMarketing {
+	position: fixed;
+	left: -5px;
+	top: 45px;
+	z-index: 50;
+	padding: 20px;
+	font-size: 22pt;
+	line-height: 20px;
+	opacity: 0.3;
+}
+
 #mapLegend, #techLegend{
 	position: fixed;
 	right: 10px;
@@ -1392,6 +1403,7 @@ ul#btns2 {
 	height: calc(100% - 125px);
 	background-color: rgba(255,255,255,0.9);
 	display: none;
+	margin-top: 700px;
 }
 
 #marketing-sales.is-active {
@@ -1453,7 +1465,7 @@ ul#btns2 {
 #marketing-sales .marketingNav {
 
 	position: absolute;
-	left:20px;
+	left:15px;
 	top:50px;
 	bottom: 0;
 	width: 140px;
@@ -1484,7 +1496,7 @@ ul#btns2 {
 	left:160px;
 	top: 50px;
 	bottom: 0;
-	right: 20px;
+	right: 15px;
 	overflow-y:scroll;
 }
 
@@ -1509,10 +1521,20 @@ ul#btns2 {
 }
 
 #marketing-sales .mkt_boxHeader {
-	background-color: #e0e0e0;
+	background-color: rgba(0,0,0,0.08);
 	line-height: 50px;
 	position: relative;
 	margin-bottom: 20px;
+}
+
+#marketing-sales .mkt_boxHeader h2 {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.mkt_news .mkt_boxHeader + .content {
+	margin-top: -20px;
+	margin-bottom: 10px;
 }
 
 #marketing-sales .mkt_switch {
@@ -1521,3 +1543,82 @@ ul#btns2 {
 	right: 0;
 	top: 0;
 }
+
+
+.news-item {
+	font-size: 10pt;
+	background-color: rgba(0,0,0,0.05);
+	padding: 7.5px 10px;
+}
+
+.news-item h4 {
+	margin-top: 0;
+	margin-bottom: 0;
+	white-space: nowrap;
+	overflow: hidden;
+ 	text-overflow: ellipsis;
+    max-height: 14pt;
+}
+
+.news-item h5, .news-item p {
+	font-size: 9pt;
+}
+
+.news-item p {
+	/*white-space: nowrap;*/
+  	overflow: hidden;
+ 	text-overflow: ellipsis;
+    max-height: 30px;
+    margin-top: 3px;
+    margin-bottom: 0;
+}
+
+.news-item h5 {
+	margin-top: 0;
+	margin-bottom: 0;
+	color:#7c9cbb;
+	font-weight: 100;
+}
+
+.mkt_switch {
+	line-height: 30px;
+	font-size: 9pt;
+	background-color: #fff;
+	border-radius: 16px;
+	padding-left: 18px;
+	padding-right: 38px;
+	color:#808080;
+	margin-top: 9px;
+	margin-right: 10px;
+	border:1px solid #808080;
+	position: relative;
+}
+
+.mkt_switch:after {
+	width: 0; 
+ 	height: 0; 
+	border-left: 7px solid transparent;
+	border-right: 7px solid transparent;
+    border-top: 7px solid #808080;
+    content:" ";
+    position: absolute;
+    right: 12px;
+    top: 12px;
+}
+
+
+/*@media screen and (min-width: 1024px) {
+
+	body {
+		width: 1024px;
+		margin:auto;
+		position: absolute;
+		height: 695px;
+		top: 50%;
+		margin-top: calc((695px / 2) * -1);
+		left:50%;
+		margin-left: calc((1024px / 2) * -1);
+		overflow: hidden;
+	}
+
+}*/
