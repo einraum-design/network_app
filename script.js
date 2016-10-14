@@ -1991,6 +1991,8 @@ var apiData = {
 
 				var current = $(this);
 
+				$( target + " .active").text(loadData.title);
+
 				$( target + " .content" ).append(
 
 					'<div class="news-item">' + 
@@ -2065,6 +2067,10 @@ var marketing = {
 
 			$(this).siblings(".options").first().toggleClass("drop");
 
+			var nw = $(this).outerWidth() + 10;
+
+			$(this).siblings(".options").first().width(nw);
+
 		});
 
 
@@ -2072,6 +2078,7 @@ var marketing = {
 
 			apiData.parseRSS($(this).data("rss"),"#mkt_rss",$(this).data("count"));
 			$(this).parent().removeClass("drop");
+			$(this).parent().parent().find(".active").text($(this).text());
 
 		});
 
