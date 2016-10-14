@@ -20,7 +20,11 @@
       Coperion
   </author>
 
-  <icon src="favicons/android-chrome-192x192.png" gap:role="default" />
-  <preference name="prerendered-icon" value="true"/>
+  <icon gap:platform="android" gap:qualifier="ldpi" src="android/mipmap-ldpi/ic_launcher.png"/>
+  <icon gap:platform="android" gap:qualifier="mdpi" src="android/mipmap-mdpi/ic_launcher.png"/>
+  <icon gap:platform="android" gap:qualifier="hdpi" src="android/mipmap-hdpi/ic_launcher.png"/>
+  <icon gap:platform="android" gap:qualifier="xhdpi" src="android/mipmap-xhdpi/ic_launcher.png"/>
+  <icon gap:platform="android" gap:qualifier="xxhdpi" src="android/mipmap4-xxhdpi/ic_launcher.png"/>
+  <icon gap:platform="android" gap:qualifier="xxxhdpi" src="android/mipmap2-xxxhdpi/ic_launcher.png"/>
 
 </widget>
