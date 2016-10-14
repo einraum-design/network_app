@@ -64,7 +64,15 @@ $(document).ready(function(){
 	    }
 	}
 
-	$("#header h2").html(tage[heute.getDay()] + " " + monate[heute.getMonth()] + " " + heute.getDate() + " &nbsp; " + pad(heute.getHours()) + ":" + pad(heute.getMinutes()))
+	function setHeaderTime() {
+		heute = new Date()
+		$("#header h2").html(tage[heute.getDay()] + " " + monate[heute.getMonth()] + " " + heute.getDate() + " &nbsp; " + pad(heute.getHours()) + ":" + pad(heute.getMinutes()))
+		console.log("test");
+	}
+	setHeaderTime();
+	setInterval(setHeaderTime, 15000);
+
+	
 
 	function loadHome(){
 
@@ -614,6 +622,7 @@ $(document).ready(function(){
 		}
 
 		currentDayPercent.init();
+		setInterval(currentDayPercent.init(), 15000)
 
 		$(".productionPlanColumn").insertAfter($(".productionPlanColumn:first"))
 		$(".productionPlanColumn:first").remove()
@@ -1301,15 +1310,15 @@ $(document).ready(function(){
 			var content = $(this).children("p").html()
 			var contentSelf = $(this).html()
 
-			if (contentSelf == "Recipe 1"){
+			if (contentSelf == "Recipe A"){
 				content = 1
-			} else if (contentSelf == "Recipe 2"){
+			} else if (contentSelf == "Recipe B"){
 				content = 2
-			} else if (contentSelf == "Recipe 3"){
+			} else if (contentSelf == "Recipe C"){
 				content = 3
-			} else if (contentSelf == "Recipe 4"){
+			} else if (contentSelf == "Recipe D"){
 				content = 4
-			} else if (contentSelf == "Recipe 5"){
+			} else if (contentSelf == "Recipe D"){
 				content = 5
 			}
 
@@ -1341,12 +1350,12 @@ $(document).ready(function(){
 				} else {
 					left = left + 20
 				}
-				if (contentSelf == "Recipe 1" || contentSelf == "Recipe 2" || contentSelf == "Recipe 3" || contentSelf == "Recipe 4" || contentSelf == "Recipe 5"){
+				if (contentSelf == "Recipe A" || contentSelf == "Recipe B" || contentSelf == "Recipe C" || contentSelf == "Recipe D" || contentSelf == "Recipe E"){
 					top = top + 13
 					left = left + 83
 				}
-			} else if (contentSelf == "Recipe 1" || contentSelf == "Recipe 2" || contentSelf == "Recipe 3" || contentSelf == "Recipe 4" || contentSelf == "Recipe 5"){
-				left = left + 20
+			} else if (contentSelf == "Recipe A" || contentSelf == "Recipe B" || contentSelf == "Recipe C" || contentSelf == "Recipe D" || contentSelf == "Recipe E"){
+				left = left + 2
 			}
 			if($(this).hasClass("attentionIcn") == true){
 				left = 352
@@ -1496,12 +1505,12 @@ $(document).ready(function(){
 
 		// nacht positionieren
 
-		var nightPos = -(25/6)*heute.getHours()+30
-		$(".night").first().css({"left": nightPos + "%"})
-		$(".night").last().css({"left": nightPos + 100 + "%"})
+		// var nightPos = -(25/6)*heute.getHours()+30
+		// $(".night").first().css({"left": nightPos + "%"})
+		// $(".night").last().css({"left": nightPos + 100 + "%"})
 	}
 	updateTime()
-	setInterval(updateTime, 60000)
+	setInterval(updateTime, 15000)
 
 
 	// news tigger
@@ -1585,7 +1594,7 @@ for (var f = 0; f < 4; f++) {
 var tableHeads = [
 	["PE", "PP", "Additive A", "Additive B", "Premix", "GF", "CaCo₃"],
 	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
-	["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"],
+	["Recipe A", "Recipe B", "Recipe C", "Recipe D", "Recipe E"],
 	["Availability", "Ø product change over [min.]", "maintenance", "scrap rate", "customer complaints"],
 	["Produktionsbestand", "Verkaufspreis", "Herstellungskosten"],
 	["Spalte 1", "Spalte 2", "Spalte 3", "Spalte 4"],
@@ -1674,11 +1683,11 @@ var productionPlan = [
 ]
 
 var recipes = [
-	["Recipe 1 – Performance 2.500 kg/h", "67% PE", "3% Additives (Powder) + Yellow (Pellets)", "30% CaCO3"],
-	["Recipe 2 – Performance 2.600 kg/h ", "47% PP", "3% Premix", "50% CaCO3"],
-	["Recipe 3 – Performance 3.000 kg/h", "47% PP", "3% Additives (Pellets) + Black (Pellets)", "50% GF"],
-	["Recipe 4 – Performance 2.800 kg/h", "67% PP", "3% Additives (Pellets) + Black (Pellets)", "30% GF"],
-	["Recipe 5 – Performance 2.600 kg/h", "87% PP", "3% Additives (Pellets) + Black (Pellets)", "10% GF"],
+	["Recipe A – Performance 2.500 kg/h", "67% PE", "3% Additives (Powder) + Yellow (Pellets)", "30% CaCO3"],
+	["Recipe B – Performance 2.600 kg/h ", "47% PP", "3% Premix", "50% CaCO3"],
+	["Recipe C – Performance 3.000 kg/h", "47% PP", "3% Additives (Pellets) + Black (Pellets)", "50% GF"],
+	["Recipe D – Performance 2.800 kg/h", "67% PP", "3% Additives (Pellets) + Black (Pellets)", "30% GF"],
+	["Recipe E – Performance 2.600 kg/h", "87% PP", "3% Additives (Pellets) + Black (Pellets)", "10% GF"],
 ]
 
 var recipeValues = [
@@ -1818,16 +1827,30 @@ var currentDayPercent = {
 		currentDayPercent.productionTime();
 		setInterval(function(){ currentDayPercent.productionTime(); }, 60000);
 
+		var setProgress = currentDayPercent.mapRange(currentDayPercent.getRealPercent(), 4, 96, 50, 130);
+		$("#sun").css('background-position-x', setProgress+'%');
+
 	},
 
 	getPercent: function() {
-
 		var tempNow = Math.floor(Date.now() / 1000);
 		var start = new Date();
 		start.setHours(6,0);
 		start = Math.floor(start.getTime() / 1000);
 		var timePercent = ((tempNow - start) / 86400)*100;
 		return timePercent;
+
+	},
+
+	getRealPercent: function() {
+
+		var now = moment();
+		var midnight = moment().hours(0).minutes(0).seconds(0);
+
+		var secondsOfDay = parseInt( now.format('X'), 10 ) - parseInt( midnight.format('X'), 10 );
+		var percentOfDay = ( secondsOfDay / 86400 ) * 100;
+
+		return percentOfDay;
 
 	},
 
