@@ -1240,8 +1240,8 @@ $(document).ready(function(){
 				loadProductBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold")
-			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>for sale")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold, but still in the warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>for sale")
+			$(".infoMaterials").children(".materialLegend:last").html("")
 			$("#btns3").hide()
 
 		} else if (number == 7){
@@ -1270,9 +1270,9 @@ $(document).ready(function(){
 					var x = i2+plus+1
 					var y = i1+1
 					if ((x == 4 && y == 7) || (x == 5 && y == 4) || (x == 5 && y == 5) || (x == 5 && y == 6) || (x == 5 && y == 7) || (x == 5 && y == 9) || (x == 8 && y == 8) || (x == 9 && y == 6) || (x == 13 && y == 10) || (x == 15 && y == 9)){
-							$(this).children("li:last").css({"color": "#ff8400"})
+							// $(this).children("li:last").css({"color": "#ff8400"})
 					} else if ((x == 15 && y == 4) || (x == 15 && y == 5) || (x == 15 && y == 9) || (x == 15 && y == 10) || (x == 16 && y == 4) || (x == 16 && y == 5) || (x == 16 && y == 6) || (x == 16 && y == 9) || (x == 16 && y == 10) || (x == 13 && y == 7) || (x == 14 && y == 8)){
-							$(this).children("li:last").css({"color": "red"})
+							// $(this).children("li:last").css({"color": "red"})
 					}
 				})
 			})
