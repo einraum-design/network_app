@@ -1,3 +1,7 @@
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+
 var newsListe = [
 	"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #a6eb00'>▼</span>"
 ]
