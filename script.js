@@ -1580,7 +1580,7 @@ for (var f = 0; f < 4; f++) {
 
 
 var tableHeads = [
-	["PE", "PP", "Add. Powder + Y", "Add. Pellets + B", "Premix", "GF", "CaCO3"],
+	["PE", "PP", "Additive A", "Additive B", "Premix", "GF", "CaCo3"],
 	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
 	["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"],
 	["Availability", "Ø product change over [min.]", "maintenance", "scrap rate", "customer complaints"],
