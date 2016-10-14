@@ -68,7 +68,7 @@ function getCoperionFeed($feed_url, $coperionFile) {
 }
 
 if (filemtime($coperionFile) < (time()-3600)) {
-	getCoperionFeed("http://www.coperion.com/news/", $coperionFile);
+	getCoperionFeed("http://www.coperion.com/en/news/", $coperionFile);
 }
 
 
