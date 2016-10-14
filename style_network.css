@@ -1075,6 +1075,46 @@ ul#btns2 {
 	transform: translate(-50%, 0);
 }
 
+.productionTime.clickableEntry p[data-rec="1"]:after {
+	content:"A";
+	font-size: 10pt;
+}
+.productionTime.clickableEntry p[data-rec="2"]:after {
+	content:"B";
+	font-size: 10pt;
+}
+.productionTime.clickableEntry p[data-rec="3"]:after {
+	content:"C";
+	font-size: 10pt;
+}
+.productionTime.clickableEntry p[data-rec="4"]:after {
+	content:"D";
+	font-size: 10pt;
+}
+.productionTime.clickableEntry p[data-rec="5"]:after {
+	content:"E";
+	font-size: 10pt;
+}
+
+.productionTime.clickableEntry p[data-rec="1"]:after,
+.productionTime.clickableEntry p[data-rec="2"]:after,
+.productionTime.clickableEntry p[data-rec="3"]:after,
+.productionTime.clickableEntry p[data-rec="4"]:after,
+.productionTime.clickableEntry p[data-rec="5"]:after {
+
+	margin-top: -13px;
+	display: block;
+
+}
+
+.productionTime.clickableEntry p[data-rec="1"], 
+.productionTime.clickableEntry p[data-rec="2"], 
+.productionTime.clickableEntry p[data-rec="3"],
+.productionTime.clickableEntry p[data-rec="4"],
+.productionTime.clickableEntry p[data-rec="5"] {
+	font-size: 0;
+}
+
 .productionTime{
 	background-color: #a6eb00;
 	font-weight: normal;

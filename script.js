@@ -70,7 +70,7 @@ $(document).ready(function(){
 		console.log("test");
 	}
 	setHeaderTime();
-	setInterval(setHeaderTime, 15000);
+	setInterval(setHeaderTime, 30000);
 
 	
 
@@ -113,6 +113,7 @@ $(document).ready(function(){
 
 		// start animate map
 		$("#mapDiv #map").stop(true).delay(50).animate({"width": "100%", "margin-left": "0%", "margin-top": mapMarginDefault+"px", "opacity": 1}, duration = 900, "easeInOutQuart")
+		// $("#sun").stop(true).delay(2000).show();
 
 		// disable popup
 		$("#popup").stop(true).animate({"opacity": 0}, duration = 500)
@@ -124,7 +125,12 @@ $(document).ready(function(){
 		$("#toggle").css({"pointer-events": "auto"}).animate({"opacity": 1})
 		$("#toggleText").animate({"opacity": 1})
 		$("#btns").css({"pointer-events": "auto"}).animate({"opacity": 1})
-		$(".night").delay(300).animate({"opacity": 0.25})			
+		// $(".night").delay(300).animate({"opacity": 0.25})			
+
+		setTimeout(function(){
+		  $("#sun").show();
+		}, 1000);
+
 	}
 
 	loadHome()
@@ -289,6 +295,8 @@ $(document).ready(function(){
 
 		if ($(this).css("opacity") > 0.9 && $("#warningPopup").css("opacity") < 0.1){
 
+			$("#sun").hide();
+
 			$("#mapDiv").addClass("blur blurwhite");
 			$("body").addClass("hideNav");
 			$("#closeBtn").css({"opacity": 0.5})
@@ -310,7 +318,7 @@ $(document).ready(function(){
 
 			// map an neue Stelle schieben
 			$("#mapDiv #map").stop(true).animate({"width": "200%", "margin-left": marginX+"px", "margin-top": marginY+"px", "opacity": 1}, duration = 700)
-			$(".night").delay(100).animate({"opacity": 0})
+			// $(".night").delay(100).animate({"opacity": 0})
 
 			// mapInfos an neue Stelle schieben und ausblenden
 			$("#mapDiv .mapInfo").each(function(index, value) {
@@ -622,7 +630,7 @@ $(document).ready(function(){
 		}
 
 		currentDayPercent.init();
-		setInterval(currentDayPercent.init(), 15000)
+		setInterval(currentDayPercent.init(), 30000)
 
 		$(".productionPlanColumn").insertAfter($(".productionPlanColumn:first"))
 		$(".productionPlanColumn:first").remove()
@@ -668,7 +676,7 @@ $(document).ready(function(){
 		 		} else if (v1 == 8){
 		 			$(this).html("<div class = 'emptyTime'></div>")
 		 		} else {
-		 			$(this).html("<div class = 'productionTime clickableEntry'><p>" + v1 + "</p></div>")
+		 			$(this).html("<div class = 'productionTime clickableEntry'><p data-rec='" + v1 + "'>" + v1 + "</p></div>")
 		 		}
 
 		 		if (v2 == 0){
@@ -680,7 +688,7 @@ $(document).ready(function(){
 		 		} else if (v2 == 8){
 		 			$(this).append("<div class = 'emptyTime'></div>")
 		 		} else {
-		 			$(this).append("<div class = 'productionTime clickableEntry'><p>" + v2 + "</p></div>")
+		 			$(this).append("<div class = 'productionTime clickableEntry'><p data-rec='" + v2 + "'>" + v2 + "</p></div>")
 		 		}
 
 		 		if (v3 == 0){
@@ -692,7 +700,7 @@ $(document).ready(function(){
 		 		} else if (v3 == 8){
 		 			$(this).append("<div class = 'emptyTime'></div>")
 		 		} else {
-		 			$(this).append("<div class = 'productionTime clickableEntry'><p>" + v3 + "</p></div>")
+		 			$(this).append("<div class = 'productionTime clickableEntry'><p data-rec='" + v3 + "'>" + v3 + "</p></div>")
 		 		}
 				
 		 	}
@@ -1305,7 +1313,7 @@ $(document).ready(function(){
 	// click on clickableEntry
 	function clickOnClickableEntry(){
 		if ($("#popup_extended").css("opacity") < 0.1){
-			var left = parseInt($(this).offset().left)
+			var left = parseInt($(this).offset().left - 0)
 			var top = parseInt($(this).offset().top)
 			var content = $(this).children("p").html()
 			var contentSelf = $(this).html()
@@ -1510,7 +1518,7 @@ $(document).ready(function(){
 		// $(".night").last().css({"left": nightPos + 100 + "%"})
 	}
 	updateTime()
-	setInterval(updateTime, 15000)
+	setInterval(updateTime, 30000)
 
 
 	// news tigger
