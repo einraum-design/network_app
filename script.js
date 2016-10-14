@@ -1016,7 +1016,7 @@ $(document).ready(function(){
 			} else if (number == 2) {
 				$("#techLegend").html("<b>Finished products warehouse:</b> <abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold, but still in the warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>for sale")
 			} else {
-				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>booked for production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>on stock and ordered")
+				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>booked for production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>on stock and ordered <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>overbooked")
 			}
 			
 		} else if (number != 1) {
@@ -1182,8 +1182,8 @@ $(document).ready(function(){
 				loadMaterialBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>planned")
-			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>stock")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>booked <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>on stock  <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>overbooked")
+			$(".infoMaterials").children(".materialLegend:last").html("")
 			$("#btns3").show()
 
 		} else if (number == 5){
