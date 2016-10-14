@@ -990,7 +990,7 @@ $(document).ready(function(){
 			if (number == 1){
 				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
 			} else if (number == 2) {
-				$("#techLegend").html("<b>Finished products warehouse:</b> <abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold, but still in the warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>for sale available")
+				$("#techLegend").html("<b>Finished products warehouse:</b> <abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold, but still in the warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>for sale")
 			} else {
 				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>booked for production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>on stock and ordered")
 			}
@@ -1060,7 +1060,7 @@ $(document).ready(function(){
 			})
 			$("#extraLine").hide()
 
-			$("#techLegend").html("<abc style = 'color: #29cc29; font-size: 14pt'></abc>production <abc style = 'color: #ffca00; font-size: 14pt; margin-left: 20px'></abc>set-up <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'></abc>maintenance")
+			$("#techLegend").html("<abc style = 'color: #29cc29; font-size: 14pt'></abc>production <abc style = 'color: #ffca00; font-size: 14pt; margin-left: 20px'></abc>product change over <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'></abc>maintenance")
 
 		} else if (number == 2){
 			// finished products
@@ -1217,7 +1217,7 @@ $(document).ready(function(){
 			}
 
 			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold")
-			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>for sale available")
+			$(".infoMaterials").children(".materialLegend:last").html("<abc style = 'color: #7c9cbb; font-size: 14pt'></abc>for sale")
 			$("#btns3").hide()
 
 		} else if (number == 7){
@@ -1728,22 +1728,22 @@ var soldProductData = [
 ]
 
 var efficiencyVal =[
-	["4016&thinsp;h/y", "90", "40&thinsp;h/y", "2,20%", "3" ],
-	["4016&thinsp;h/y", "84", "65&thinsp;h/y", "1,90%", "1" ],
+	["4016&thinsp;h/y", "90 minutes", "40&thinsp;h/y", "2,20%", "3" ],
+	["4016&thinsp;h/y", "84 minutes", "65&thinsp;h/y", "1,90%", "1" ],
 	[],
-	["4032&thinsp;h/y", "162", "25&thinsp;h/y", "1,40%", "0" ],
-	["4032&thinsp;h/y", "192", "18&thinsp;h/y", "1,10%", "1" ],
+	["4032&thinsp;h/y", "162 minutes", "25&thinsp;h/y", "1,40%", "0" ],
+	["4032&thinsp;h/y", "192 minutes", "18&thinsp;h/y", "1,10%", "1" ],
 	[],
-	["5976&thinsp;h/y", "84", "35&thinsp;h/y", "1,90%", "1" ],
-	["5976&thinsp;h/y", "93", "28&thinsp;h/y", "2,40%", "4" ],
-	["5976&thinsp;h/y", "84", "45&thinsp;h/y", "2,00%", "1" ],
+	["5976&thinsp;h/y", "84 minutes", "35&thinsp;h/y", "1,90%", "1" ],
+	["5976&thinsp;h/y", "93 minutes", "28&thinsp;h/y", "2,40%", "4" ],
+	["5976&thinsp;h/y", "84 minutes", "45&thinsp;h/y", "2,00%", "1" ],
 	[],
-	["6000&thinsp;h/y", "135", "51&thinsp;h/y", "3,40%", "5" ],
+	["6000&thinsp;h/y", "135 minutes", "51&thinsp;h/y", "3,40%", "5" ],
 	[],
-	["4000&thinsp;h/y", "66", "31&thinsp;h/y", "3,50%", "3" ],
-	["4000&thinsp;h/y", "75", "28&thinsp;h/y", "0,70%", "4" ],
-	["4000&thinsp;h/y", "111", "45&thinsp;h/y", "4,70%", "1" ],
-	["4000&thinsp;h/y", "87", "59&thinsp;h/y", "1,20%", "2" ],
+	["4000&thinsp;h/y", "66 minutes", "31&thinsp;h/y", "3,50%", "3" ],
+	["4000&thinsp;h/y", "75 minutes", "28&thinsp;h/y", "0,70%", "4" ],
+	["4000&thinsp;h/y", "111 minutes", "45&thinsp;h/y", "4,70%", "1" ],
+	["4000&thinsp;h/y", "87 minutes", "59&thinsp;h/y", "1,20%", "2" ],
 ]
 
 var productionNeedDay = [
