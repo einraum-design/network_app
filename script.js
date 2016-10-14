@@ -1,5 +1,5 @@
 var newsListe = [
-	"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>"
+	"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #a6eb00'>▼</span>"
 ]
 
 var newsListeNummer = 1
@@ -108,6 +108,7 @@ $(document).ready(function(){
 
 		// disable popup
 		$("#popup").stop(true).animate({"opacity": 0}, duration = 500)
+		$("#closeBtn").css({"opacity": 0})
 		$("#popup").css({"pointer-events" : "none"})
 		hideExtended()
 
@@ -282,6 +283,7 @@ $(document).ready(function(){
 
 			$("#mapDiv").addClass("blur blurwhite");
 			$("body").addClass("hideNav");
+			$("#closeBtn").css({"opacity": 0.5})
 			//console.log($(this).attr("data-infoId"))
 
 			var x = parseFloat($(this).attr("data-x"))
@@ -318,6 +320,7 @@ $(document).ready(function(){
 			});
 
 			$("#popup").stop(true).animate({"opacity": 1}, {duration: 500, queue: false})
+			$("#closeBtn").css({"opacity": 0.3})
 			$("#popup").css({"pointer-events" : "auto"})
 			$("#popup").css({"background-position" : "-210px -60px", "background-size": "1024px"})
 			$("#popup").animate({"background-size": "2048px", "background-position-x" : (-x*2+322) + "px", "background-position-y": (-y*2+85+mapMarginDefault) + "px"}, {duration: 700, queue: false})
@@ -1060,7 +1063,7 @@ $(document).ready(function(){
 			})
 			$("#extraLine").hide()
 
-			$("#techLegend").html("<abc style = 'color: #29cc29; font-size: 14pt'></abc>production <abc style = 'color: #ffca00; font-size: 14pt; margin-left: 20px'></abc>product change over <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'></abc>maintenance")
+			$("#techLegend").html("<abc style = 'color: #a6eb00; font-size: 14pt'></abc>production <abc style = 'color: #ffe44e; font-size: 14pt; margin-left: 20px'></abc>product change over <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'></abc>maintenance")
 
 		} else if (number == 2){
 			// finished products
@@ -1580,7 +1583,7 @@ for (var f = 0; f < 4; f++) {
 
 
 var tableHeads = [
-	["PE", "PP", "Additive A", "Additive B", "Premix", "GF", "CaCo3"],
+	["PE", "PP", "Additive A", "Additive B", "Premix", "GF", "CaCo₃"],
 	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
 	["Recipe 1", "Recipe 2", "Recipe 3", "Recipe 4", "Recipe 5"],
 	["Availability", "Ø product change over [min.]", "maintenance", "scrap rate", "customer complaints"],
@@ -1680,8 +1683,8 @@ var recipes = [
 
 var recipeValues = [
 	//PE, PP, Additive PG, Additive GS, Premix, GF, CaCO3,  >> Durchsatz
-	[1675, 0, 75, 0, 0, 0, 750, "2500 kg/h"],
-	[0, 1222, 0, 0, 780, 0, 1300, "2600 kg/h"],
+	[1675, 0, 75, 0, 0, 0, 750, "2.500 kg/h"],
+	[0, 1222, 0, 0, 780, 0, 1300, "2.600 kg/h"],
 	[0, 1410, 0, 90, 0, 1500, 0, "3.000 kg/h"],
 	[0, 1876, 0, 84, 0, 840, 0, "2.800 kg/h"],
 	[0, 2262, 0, 78, 0, 260, 0, "2.600 kg/h"]
@@ -1882,7 +1885,7 @@ var apiData = {
 		var currentCount = 3;
 
 		var newsListeTemp = [
-			"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #29cc29'>▼</span>",
+			"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #a6eb00'>▼</span>",
 			"hdf <b>#coperion</b> euer stand ist so klasse"
 		]
 
