@@ -1014,9 +1014,9 @@ $(document).ready(function(){
 			if (number == 1){
 				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
 			} else if (number == 2) {
-				$("#techLegend").html("<b>Finished products warehouse:</b> <abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold, but still in the warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>for sale")
+				$("#techLegend").html("<b>Finished Products Warehouse:</b> <abc style = 'color: #a3bacf; font-size: 14pt'></abc>Sold, but still in the Warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>For Sale")
 			} else {
-				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>booked for production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>on stock and ordered <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>overbooked")
+				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>Booked for Production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock and Ordered <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
 			}
 			
 		} else if (number != 1) {
@@ -1084,7 +1084,7 @@ $(document).ready(function(){
 			})
 			$("#extraLine").hide()
 
-			$("#techLegend").html("<abc style = 'color: #a6eb00; font-size: 14pt'></abc>production <abc style = 'color: #ffe44e; font-size: 14pt; margin-left: 20px'></abc>product change over <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'></abc>maintenance")
+			$("#techLegend").html("<abc style = 'color: #a6eb00; font-size: 14pt'></abc>Production <abc style = 'color: #ffe44e; font-size: 14pt; margin-left: 20px'></abc>Product Change Over <abc style = 'color: #cc2929; font-size: 14pt; margin-left: 20px'></abc>Maintenance")
 
 		} else if (number == 2){
 			// finished products
@@ -1182,7 +1182,7 @@ $(document).ready(function(){
 				loadMaterialBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>booked <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>on stock  <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>overbooked")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>Booked <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock  <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
 			$(".infoMaterials").children(".materialLegend:last").html("")
 			$("#btns3").show()
 
@@ -1236,11 +1236,11 @@ $(document).ready(function(){
 
 				var x = $aboutUlVal.children("li:last").index()
 				var y = infoNumber*2+1
-				$aboutUlHead.append("<li class = 'clickableEntry' style = 'font-weight: normal'>Recipe "+ (x+1) +"</li>")
+				$aboutUlHead.append("<li class = 'clickableEntry' style = 'font-weight: normal'>Product "+ (x+1) +"</li>")
 				loadProductBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>sold, but still in the warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>for sale")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>Sold, but still in the Warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>For Sale")
 			$(".infoMaterials").children(".materialLegend:last").html("")
 			$("#btns3").hide()
 
@@ -1606,8 +1606,8 @@ for (var f = 0; f < 4; f++) {
 var tableHeads = [
 	["PE", "PP", "Additive A", "Additive B", "Premix", "GF", "CaCo₃"],
 	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
-	["Recipe A", "Recipe B", "Recipe C", "Recipe D", "Recipe E"],
-	["Availability", "Ø product change over [min.]", "maintenance", "scrap rate", "customer complaints"],
+	["Finished Product A", "Finished Product B", "Finished Product C", "Finished Product D", "Finished Product E"],
+	["Availability", "Ø Change Over", "Maintenance", "Scrap Rate", "Customer Complaints"],
 	["Produktionsbestand", "Verkaufspreis", "Herstellungskosten"],
 	["Spalte 1", "Spalte 2", "Spalte 3", "Spalte 4"],
 ]
