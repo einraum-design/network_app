@@ -1012,11 +1012,11 @@ $(document).ready(function(){
 				}
 			}
 			if (number == 1){
-				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
+				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #97bee6; font-size: 14pt'></abc>planned <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>stock")
 			} else if (number == 2) {
-				$("#techLegend").html("<b>Finished Products Warehouse:</b> <abc style = 'color: #a3bacf; font-size: 14pt'></abc>Sold, but still in the Warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>For Sale")
+				$("#techLegend").html("<b>Finished Products Warehouse:</b> <abc style = 'color: #97bee6; font-size: 14pt'></abc>Sold, but still in the Warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>For Sale")
 			} else {
-				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #a3bacf; font-size: 14pt'></abc>Booked for Production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock and Ordered <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
+				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #97bee6; font-size: 14pt'></abc>Booked for Production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock and Ordered <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
 			}
 			
 		} else if (number != 1) {
@@ -1182,7 +1182,7 @@ $(document).ready(function(){
 				loadMaterialBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>Booked <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock  <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #97bee6; font-size: 14pt'></abc>Booked <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock  <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
 			$(".infoMaterials").children(".materialLegend:last").html("")
 			$("#btns3").show()
 
@@ -1240,7 +1240,7 @@ $(document).ready(function(){
 				loadProductBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
-			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #a3bacf; font-size: 14pt'></abc>Sold, but still in the Warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>For Sale")
+			$(".infoMaterials").children(".materialLegend:first").html("<abc style = 'color: #97bee6; font-size: 14pt'></abc>Sold, but still in the Warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>For Sale")
 			$(".infoMaterials").children(".materialLegend:last").html("")
 			$("#btns3").hide()
 
@@ -1606,7 +1606,7 @@ for (var f = 0; f < 4; f++) {
 var tableHeads = [
 	["PE", "PP", "Additive A", "Additive B", "Premix", "GF", "CaCo₃"],
 	[productionDates[0].getDate() + "." + parseInt(productionDates[0].getMonth()+1) + ". – " + productionDates[1].getDate() + "." + parseInt(productionDates[1].getMonth()+1) + ".", productionDates[2].getDate() + "." + parseInt(productionDates[2].getMonth()+1) + ". – " + productionDates[3].getDate() + "." + parseInt(productionDates[3].getMonth()+1)+ ".", productionDates[4].getDate() + "." + parseInt(productionDates[4].getMonth()+1) + ". – " + productionDates[5].getDate() + "." + parseInt(productionDates[5].getMonth()+1)+ ".", productionDates[6].getDate() + "." + parseInt(productionDates[6].getMonth()+1) + ". – " + productionDates[7].getDate() + "." +parseInt( productionDates[7].getMonth()+1)+ "."],
-	["Finished Product A", "Finished Product B", "Finished Product C", "Finished Product D", "Finished Product E"],
+	["Finished Product <b>A<b>", "Finished Product <b>B<b>", "Finished Product <b>C<b>", "Finished Product <b>D<b>", "Finished Product <b>E<b>"],
 	["Availability", "Ø Change Over", "Maintenance", "Scrap Rate", "Customer Complaints"],
 	["Produktionsbestand", "Verkaufspreis", "Herstellungskosten"],
 	["Spalte 1", "Spalte 2", "Spalte 3", "Spalte 4"],
@@ -1695,20 +1695,20 @@ var productionPlan = [
 ]
 
 var recipes = [
-	["Recipe A – Performance 2.500 kg/h", "67% PE", "3% Additives (Powder) + Yellow (Pellets)", "30% CaCO3"],
-	["Recipe B – Performance 2.600 kg/h ", "47% PP", "3% Premix", "50% CaCO3"],
-	["Recipe C – Performance 3.000 kg/h", "47% PP", "3% Additives (Pellets) + Black (Pellets)", "50% GF"],
-	["Recipe D – Performance 2.800 kg/h", "67% PP", "3% Additives (Pellets) + Black (Pellets)", "30% GF"],
-	["Recipe E – Performance 2.600 kg/h", "87% PP", "3% Additives (Pellets) + Black (Pellets)", "10% GF"],
+	["Recipe A – Performance 2,500 kg/h", "67% PE", "3% Additives (Powder) + Yellow (Pellets)", "30% CaCo₃"],
+	["Recipe B – Performance 2,600 kg/h ", "47% PP", "3% Premix", "50% CaCo₃"],
+	["Recipe C – Performance 3,000 kg/h", "47% PP", "3% Additives (Pellets) + Black (Pellets)", "50% GF"],
+	["Recipe D – Performance 2,800 kg/h", "67% PP", "3% Additives (Pellets) + Black (Pellets)", "30% GF"],
+	["Recipe E – Performance 2,600 kg/h", "87% PP", "3% Additives (Pellets) + Black (Pellets)", "10% GF"],
 ]
 
 var recipeValues = [
 	//PE, PP, Additive PG, Additive GS, Premix, GF, CaCO3,  >> Durchsatz
-	[1675, 0, 75, 0, 0, 0, 750, "2.500 kg/h"],
-	[0, 1222, 0, 0, 780, 0, 1300, "2.600 kg/h"],
-	[0, 1410, 0, 90, 0, 1500, 0, "3.000 kg/h"],
-	[0, 1876, 0, 84, 0, 840, 0, "2.800 kg/h"],
-	[0, 2262, 0, 78, 0, 260, 0, "2.600 kg/h"]
+	[1675, 0, 75, 0, 0, 0, 750, "2,500 kg/h"],
+	[0, 1222, 0, 0, 780, 0, 1300, "2,600 kg/h"],
+	[0, 1410, 0, 90, 0, 1500, 0, "3,000 kg/h"],
+	[0, 1876, 0, 84, 0, 840, 0, "2,800 kg/h"],
+	[0, 2262, 0, 78, 0, 260, 0, "2,600 kg/h"]
 ]
 
 // stockData, finishedProductData, soldProductData sind relativ frei erfunden und richtet sich grob nach den infos auf dem plan mit dem spongebob
@@ -1752,22 +1752,22 @@ var soldProductData = [
 ]
 
 var efficiencyVal =[
-	["4016&thinsp;h/y", "90 minutes", "40&thinsp;h/y", "2,20%", "3" ],
-	["4016&thinsp;h/y", "84 minutes", "65&thinsp;h/y", "1,90%", "1" ],
+	["4,016&thinsp;h/y", "90 minutes", "40&thinsp;h/y", "2.20%", "3" ],
+	["4,016&thinsp;h/y", "84 minutes", "65&thinsp;h/y", "1.90%", "1" ],
 	[],
-	["4032&thinsp;h/y", "162 minutes", "25&thinsp;h/y", "1,40%", "0" ],
-	["4032&thinsp;h/y", "192 minutes", "18&thinsp;h/y", "1,10%", "1" ],
+	["4,032&thinsp;h/y", "162 minutes", "25&thinsp;h/y", "1.40%", "0" ],
+	["4,032&thinsp;h/y", "192 minutes", "18&thinsp;h/y", "1.10%", "1" ],
 	[],
-	["5976&thinsp;h/y", "84 minutes", "35&thinsp;h/y", "1,90%", "1" ],
-	["5976&thinsp;h/y", "93 minutes", "28&thinsp;h/y", "2,40%", "4" ],
-	["5976&thinsp;h/y", "84 minutes", "45&thinsp;h/y", "2,00%", "1" ],
+	["5,976&thinsp;h/y", "84 minutes", "35&thinsp;h/y", "1.90%", "1" ],
+	["5,976&thinsp;h/y", "93 minutes", "28&thinsp;h/y", "2.40%", "4" ],
+	["5,976&thinsp;h/y", "84 minutes", "45&thinsp;h/y", "2.00%", "1" ],
 	[],
-	["6000&thinsp;h/y", "135 minutes", "51&thinsp;h/y", "3,40%", "5" ],
+	["6,000&thinsp;h/y", "135 minutes", "51&thinsp;h/y", "3.40%", "5" ],
 	[],
-	["4000&thinsp;h/y", "66 minutes", "31&thinsp;h/y", "3,50%", "3" ],
-	["4000&thinsp;h/y", "75 minutes", "28&thinsp;h/y", "0,70%", "4" ],
-	["4000&thinsp;h/y", "111 minutes", "45&thinsp;h/y", "4,70%", "1" ],
-	["4000&thinsp;h/y", "87 minutes", "59&thinsp;h/y", "1,20%", "2" ],
+	["4,000&thinsp;h/y", "66 minutes", "31&thinsp;h/y", "3.50%", "3" ],
+	["4,000&thinsp;h/y", "75 minutes", "28&thinsp;h/y", "0.70%", "4" ],
+	["4,000&thinsp;h/y", "111 minutes", "45&thinsp;h/y", "4.70%", "1" ],
+	["4,000&thinsp;h/y", "87 minutes", "59&thinsp;h/y", "1.20%", "2" ],
 ]
 
 var productionNeedDay = [
@@ -1920,8 +1920,8 @@ var apiData = {
 		var currentCount = 3;
 
 		var newsListeTemp = [
-			"<i>Raw Oil: <b>$&thinsp;48,97<b></i> <span style = 'color: #a6eb00'>▼</span>",
-			"hdf <b>#coperion</b> euer stand ist so klasse"
+			"<i>Raw Oil: <b>$&thinsp;48.97<b></i> <span style = 'color: #a6eb00'>▼</span>",
+			"<b>Twitter:</b> <span style = 'color: #7c9cbb'><b>#coperion</b> <b>#K2016</b></span> Pay us a visit at Booth B19!"
 		]
 
 		if (loadData) {
