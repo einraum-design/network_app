@@ -352,7 +352,7 @@ $(document).ready(function(){
 			// auf produktions-tab resetten
 			$("#popup h3").removeClass("activebtn")
 			$("#popup .preselected").addClass("activebtn")
-			$("#popup .preselected").siblings().css({"background-color": "#e8ebef"})
+			// $("#popup .preselected").siblings().css({"background-color": "#e8ebef"})
 			// soundso viele tabs für die linien machen
 			$("#valTab").children().remove()
 			$(".scrollableY2").children().remove()
@@ -890,7 +890,7 @@ $(document).ready(function(){
 			var w1 = scaleFactor*100
 			var w2 = 100*needed/stock
 
-			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy(stock/1000) ).siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000))
+			element.children(".empty").children(".full").css({"width": 0}).animate({"width": w1+"%"}, duration = duration).siblings(".emptyNumber").html(makeNumberSexy(stock/1000) + "&thinsp;t" ).siblings(".full").children(".used").css({"width": w2+"%"}).children("p").html(makeNumberSexy(needed/1000) + "&thinsp;t")
 
 			if (stock < needed){
 
@@ -1016,7 +1016,7 @@ $(document).ready(function(){
 			} else if (number == 2) {
 				$("#techLegend").html("<b>Finished Products Warehouse:</b> <abc style = 'color: #97bee6; font-size: 14pt'></abc>Sold, but still in the Warehouse <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>For Sale")
 			} else {
-				$("#techLegend").html("<span>values</span> tons <abc style = 'color: #97bee6; font-size: 14pt'></abc>Booked for Production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock and Ordered <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
+				$("#techLegend").html(" <abc style = 'color: #97bee6; font-size: 14pt'></abc>Booked for Production <abc style = 'color: #7c9cbb; font-size: 14pt; margin-left: 20px'></abc>On Stock and Ordered <abc style = 'color: #ff960d; font-size: 14pt; margin-left: 20px'></abc>Overbooked")
 			}
 			
 		} else if (number != 1) {
@@ -1041,7 +1041,7 @@ $(document).ready(function(){
 		// DIESES VERSCHISSENE CSS UMGEHEN, DAS DIE ÜBERSCHRIFT NICHT KÜRZEN KANN
 		if (number != 0 && number != 2){
 			$(".countryInfo:gt(1)").each(function(){
-				$(this).children("h4").css({"max-width" : $(this).children("ul").length*160 + "px"})
+				$(this).children("h4").css({"max-width" : $(this).children("ul").length*220 + "px"})
 			})
 		}
 
@@ -1194,7 +1194,7 @@ $(document).ready(function(){
 			for(i = 0; i < tableHeads[1].length; i++){
 				$("#infoNames").append("<li>" + tableHeads[1][i] + "</li>")
 				for (k = 0; k < tableSubHeads[1][i].length; k++){
-					$("#infoNames").append("<li style = 'margin-left: 96px; padding-left: 4px; padding-right: 4px'>" + tableSubHeads[1][i][k] + "</li>")
+					$("#infoNames").append("<li style = 'margin-left: 116px; padding-left: 4px; padding-right: 4px'>" + tableSubHeads[1][i][k] + "</li>")
 					if (k == 0){
 						$("#infoNames li:last").css({"margin-top": "-30px"})
 					} else if (k >= 5){
@@ -1236,7 +1236,10 @@ $(document).ready(function(){
 
 				var x = $aboutUlVal.children("li:last").index()
 				var y = infoNumber*2+1
-				$aboutUlHead.append("<li class = 'clickableEntry' style = 'font-weight: normal'>Product "+ (x+1) +"</li>")
+
+				var productNames = ["A","B","C","D","E","F","G"];
+				$aboutUlHead.append("<li class = 'clickableEntry' style = 'font-weight: normal'>Product "+ productNames[x] +"</li>")
+
 				loadProductBar($aboutUlVal.children("li:last"), x+1,y, true)
 			}
 
@@ -1311,7 +1314,7 @@ $(document).ready(function(){
 	$("#btns li").on("click", clickOnBtn)
 	$("#popup h3").on("touchend", clickOnBtn)
 	$("#popup h3").on("touchstart", function(){
-		$(this).css({"background-color": "#eee"})
+		// $(this).css({"background-color": "#eee"})
 	})
 
 	// click on clickableEntry
@@ -1529,7 +1532,7 @@ $(document).ready(function(){
 
 	
 	updateTigger()
-	setInterval(updateTigger, 1800)
+	setInterval(updateTigger, 3500)
 
 
 
