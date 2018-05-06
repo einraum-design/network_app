@@ -1905,14 +1905,14 @@ var apiData = {
 	},
 
 	refreshServerData: function() {
-
-		$.ajax({
+		console.log( 'refreshing server data has been disabled' );
+		/*$.ajax({
 			dataType: "json",
 			url : "api/data.php",
 			success : function (data) {
 				
 			}
-		});
+		});*/
 
 	},
 
@@ -1924,7 +1924,7 @@ var apiData = {
 
 		var newsListeTemp = [
 			"<i>Raw Oil: <b>$&thinsp;48.97<b></i> <span style = 'color: #a6eb00'>▼</span>",
-			"<b>Twitter:</b> <span style = 'color: #7c9cbb'><b>#coperion</b> <b>#K2016</b></span> Pay us a visit at Booth B19!"
+			"<b>Twitter:</b> <span style = 'color: #7c9cbb'><b>#coperion</b> <b>#NPE2018</b></span> Pay us a visit at Booth W729!"
 		]
 
 		if (loadData) {
@@ -2001,13 +2001,14 @@ var apiData = {
 	updateWeather: function() {
 
 		$( ".mapInfo" ).each(function() {
- 			
-			var current = $(this).data("name");
-			var temperature = apiData.data_weather[current].temp;
-			var weather = apiData.data_weather[current].weather;
+ 			if ( apiData && apiData.data_weather && current && apiData.data_weather[current] ) {
+				var current = $(this).data("name");
+				var temperature = apiData.data_weather[current].temp;
+				var weather = apiData.data_weather[current].weather;
 
-			$(this).attr("data-temp", temperature + "°C");
-			$(this).attr("data-weather", weather);
+				$(this).attr("data-temp", temperature + "°C");
+				$(this).attr("data-weather", weather);
+			}
  			
 
 		});
